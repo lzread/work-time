@@ -1,41 +1,52 @@
 <template>
   <div id="login">
-    
 
     <aside>
 
-        <div class="login-form">
-            <h1>{{ $t("Login.titleText") }}</h1>
-            <div class="cell">
-                <div class="hd"></div>
-                <div class="bd">
-                    <input type="text" class="username" v-model="username" :placeholder="$t('Login.usernamePlaceholderText')" maxlength="30" autocomplete="false">
-                </div>
-                <div class="ft">
-                    <i></i>
-                </div>
-            </div>
-
-            <div class="cell">
-                <div class="hd"></div>
-                <div class="bd">
-                    <input type="password" class="password" v-model="password" :placeholder="$t('Login.passwordPlaceholderText')" maxlength="30" autocomplete="false">
-                </div>
-                <div class="ft">
-                    <i></i>
-                </div>
-            </div>
-
-            <button>{{ $t("Login.buttonText") }}</button>
-
-            <p><a href="#">MIT</a> license</p>
-            <p>Copyright &copy; 2019-2029 lzread </p>
-
-
+      <div class="login-form">
+        <!-- <h1>{{ $t("Login.titleText") }}</h1> -->
+        <div class="cell">
+          <div class="hd"></div>
+          <div class="bd">
+            <input
+              type="text"
+              class="username"
+              v-model="username"
+              :placeholder="$t('Login.usernamePlaceholderText')"
+              maxlength="30"
+              autocomplete="false"
+            >
+          </div>
+          <div class="ft">
+            <i></i>
+          </div>
         </div>
 
-    </aside>
+        <div class="cell">
+          <div class="hd"></div>
+          <div class="bd">
+            <input
+              type="password"
+              class="password"
+              v-model="password"
+              :placeholder="$t('Login.passwordPlaceholderText')"
+              maxlength="30"
+              autocomplete="false"
+            >
+          </div>
+          <div class="ft">
+            <i></i>
+          </div>
+        </div>
 
+        <button @click="login">{{ $t("Login.buttonText") }}</button>
+
+        <p><a href="#">MIT</a> license</p>
+        <p>Copyright &copy; 2019-2029 lzread </p>
+
+      </div>
+
+    </aside>
 
   </div>
 </template>
@@ -45,13 +56,37 @@ export default {
   name: "login",
   data() {
     return {
-      username: "13919992999",
-      password: "888"
+      username: "15001021070",
+      password: "888888"
     };
+  },
+  methods: {
+    login() {
+      this.$store
+        .dispatch("login", {
+          tel: this.username,
+          pwd: this.password
+        })
+        .then((data) => {
+          if(data.errorCode == 1){
+            //成功
+            this.$router.push({ path: '/disktop/index' });
+
+          }else{
+            //失败
+
+          }
+        })
+        .catch(err => {
+          console.log(err);
+
+        });
+    }
   }
 };
 </script>
 
+<!--
 <style lang="less">
 @theme:#1296db;
 #login{width: 100%; height: 100%; display: flex; display: -webkit-flex; align-items: center; justify-content: center;
@@ -80,3 +115,4 @@ export default {
     }
 }
 </style>
+-->
