@@ -1,7 +1,9 @@
 <template>
   <div id="index">
 
-    123
+    <v-icon name="flag"></v-icon>
+    <v-icon name="flag"></v-icon>
+    <v-icon name="flag"></v-icon>
    
   </div>
 </template>

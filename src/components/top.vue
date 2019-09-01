@@ -6,9 +6,8 @@
         <el-breadcrumb-item
           v-for="item in $route.matched"
           :key="item.path"
-          v-show="item.name != 'home'"
         >
-          {{ item.meta.menuName }}
+          {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb>
       <div class="info">

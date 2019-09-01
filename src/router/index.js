@@ -3,8 +3,7 @@ import Router from 'vue-router'
 
 import Login from '@/views/login'
 
-import Home from '@/views/home'
-import Disktop from '@/views/disktop/index'
+import Layout from '@/views/home'
 
 import Auth_MyForm from '@/views/auth_manage/index'
 
@@ -16,47 +15,48 @@ import Flow_MyFlow from '@/views/flow_manage/index'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'Login',
+      name: '登录',
       component: Login,
+      hidden:true,
       meta: {
-        menuShow: false,
+        title: '登录',
+      },
+    },
+
+    {
+      path: '/home',
+      name: '我的桌面',
+      component: Layout,
+      meta: {
+        title: '我的桌面',
+        icon: ''
       },
     },
 
 
 
-    {
-      path: '/disktop/index',
-      component: Home,
-      name: 'disktop',
-      meta: {
-        menuShow: true,
-        menuName: '我的桌面',
-      }
-    },
 
 
 
 
     {
       path: '/auth',
-      component: Home,
-      name: 'Auth',
+      component: Layout,
+      name: '权限管理',
       meta: {
-        menuShow: true,
-        menuName: '权限管理',
+
       },
       children: [
         {
           path: '/auth/index',
-          name: 'myauth',
+          name: '我的权限',
           component: Auth_MyForm,
           meta: {
-            menuShow: true,
-            menuName: '我的权限',
+
           }
         },
       ]
@@ -68,29 +68,25 @@ export default new Router({
 
     {
       path: '/form',
-      component: Home,
-      name: 'Form',
+      component: Layout,
+      name: '表单管理',
       meta: {
-        menuShow: true,
-        menuName: '表单管理',
+
       },
       children: [
         {
           path: '/form/index',
-          name: 'myform',
+          name: '我的表单',
           component: Form_MyForm,
           meta: {
-            menuShow: true,
-            menuName: '我的表单',
+
           },
         },
         {
           path: '/form/form_module_manage',
-          name: 'form_module_manage',
+          name: '模块管理',
           component: Form_FormModuleManage,
           meta: {
-            menuShow: true,
-            menuName: '模块管理',
           },
         }
       ]
@@ -101,20 +97,18 @@ export default new Router({
 
     {
       path: '/flow',
-      component: Home,
-      name: 'Flow',
+      component: Layout,
+      name: '流程管理',
       meta: {
-        menuShow: true,
-        menuName: '流程管理',
+
       },
       children: [
         {
           path: '/flow/index',
-          name: 'myflow',
+          name: '我的流程',
           component: Flow_MyFlow,
           meta: {
-            menuShow: true,
-            menuName: '我的流程',
+
           },
         }
       ]

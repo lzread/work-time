@@ -1,6 +1,22 @@
 <template>
   <div id="formModuleManage">
 
+    <div class="condition">
+      <el-form
+        :inline="true"
+        size="mini"
+      >
+        <el-form-item>
+          <el-input placeholder="审批人"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary">查询</el-button>
+        </el-form-item>
+      </el-form>
+
+    </div>
+
     <el-table :data="tableData">
       <el-table-column
         type="index"
@@ -33,6 +49,7 @@ export default {
   name: "formModuleManage",
   data() {
     return {
+      search: "",
       tableData: [
         {
           date: "2016-05-02",

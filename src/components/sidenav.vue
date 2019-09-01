@@ -2,38 +2,44 @@
   <div id="sidenav">
     <el-menu
       unique-opened
-      :default-active="$route.path"
       router
     >
-      <template
-        v-for="(item , index) in $router.options.routes"
-        v-if="item.meta.menuShow"
-      >
-        <el-submenu
-          :index="item.path"
-          v-if="item.children"
-          :key="index"
-        >
+      <template v-for="(item,index) in $router.options.routes">
+
+        
+        <!--一级菜单-->
+        <template v-if="!item.children && !item.hidden">
+          <el-menu-item :key="index" :index="item.path" >
+            {{item.name}}
+          </el-menu-item>
+        </template>
+
+        <!--二级菜单-->
+        <template v-else-if="item.children && !item.hidden">
+        <el-submenu :key="index" :index="item.path" >
+
           <template slot="title">
-            {{item.meta.menuName}}
+            <span slot="title">{{item.name}}</span>
           </template>
-          <el-menu-item
-            v-for="(itemChild , index) in item.children"
-            :index="itemChild.path"
-            :key="index"
-            v-if="itemChild.meta.menuShow"
-          >
-            <span>{{itemChild.meta.menuName}}</span>
+
+
+          <el-menu-item 
+            v-for="child in item.children"
+            :index="child.path"
+            :key="child.path"
+            
+          >{{child.name}}
           </el-menu-item>
         </el-submenu>
-        <el-menu-item
-          :index="item.path"
-          :key="index"
-          v-else
-        >
-          {{item.meta.menuName}}
-        </el-menu-item>
+        </template>
+
+        
+
+
+        
+
       </template>
+
     </el-menu>
   </div>
 </template>
@@ -51,5 +57,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 </style>
