@@ -70,7 +70,7 @@ export default {
         .then((data) => {
           if(data.errorCode == 1){
             //成功
-            this.$router.push({ path: '/disktop/index' });
+            this.$router.push({ path: '/home' });
 
           }else{
             //失败

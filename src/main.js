@@ -18,6 +18,8 @@ import cookie from "@/vendor/cookie.js";
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'  
 
+import '@/permission'
+
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.prototype.$cookice = cookie

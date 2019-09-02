@@ -1,9 +1,7 @@
 <template>
-  <div id="index">
+  <div id="home">
 
-    <v-icon name="flag"></v-icon>
-    <v-icon name="flag"></v-icon>
-    <v-icon name="flag"></v-icon>
+    home
    
   </div>
 </template>
@@ -11,7 +9,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "index",
+  name: "home",
   data() {
     return {
         
@@ -23,3 +21,4 @@ export default {
   components: { }
 };
 </script>
+

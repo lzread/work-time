@@ -1,15 +1,24 @@
 <template>
-  <div id="bottom"></div>
+  <div id="home">
+
+    home
+   
+  </div>
 </template>
+
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "bottom",
+  name: "home",
   data() {
-    return {};
+    return {
+        
+    };
   },
   created() {},
   computed: {},
-  methods: {}
+  methods: {},
+  components: { }
 };
 </script>
+
