@@ -1,7 +1,7 @@
 <template>
-  <div id="formIndex">
+  <div id="MyFlow">
 
-    formIndex
+    MyFlow
    
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "formIndex",
+  name: "MyFlow",
   data() {
     return {
         

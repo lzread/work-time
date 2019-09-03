@@ -1,7 +1,7 @@
 <template>
-  <div id="flowIndex">
+  <div id="EmployeeManage">
 
-    flowIndex
+    EmployeeManage
    
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "flowIndex",
+  name: "EmployeeManage",
   data() {
     return {
         

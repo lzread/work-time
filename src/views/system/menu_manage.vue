@@ -1,7 +1,7 @@
 <template>
-  <div id="home">
+  <div id="MenuManage">
 
-    home
+    MenuManage
    
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "home",
+  name: "MenuManage",
   data() {
     return {
         

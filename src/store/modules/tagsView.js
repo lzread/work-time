@@ -30,7 +30,6 @@ const mutations = {
       name: view.name,
       path: view.path
     })
-    console.log(state.visitedviews);
   },
   DEL_VISITED_VIEWS: (state, view) => {
     for (let [i, v] of state.visitedviews.entries()) {

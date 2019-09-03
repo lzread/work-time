@@ -13,15 +13,15 @@ export default new Router({
     {
       path: '/',
       name: '登录',
-      component: () => import('@/views/login/index'), 
+      component: () => import('@/views/login/index'),
       hidden: true,
     },
 
-    { 
-      path: '/404', 
+    {
+      path: '/404',
       name: '404',
-      component: () => import('@/views/404'), 
-      hidden: true 
+      component: () => import('@/views/404'),
+      hidden: true
     },
 
     {
@@ -33,65 +33,110 @@ export default new Router({
         meta: {}
       }]
     },
-
     {
-      path: '', component: Layout, redirect: '/setting',
-      children: [{
-        path: '/setting',
-        name: '设置',
-        component: () => import('@/views/setting/index'),
-        meta: {}
-      }]
-    },
-
-    {
-      path: '/auth',
+      path: '/workflow',
       component: Layout,
-      name: '权限管理',
+      name: '工作流程',
       meta: {},
       children: [
         {
-          path: '/auth/index',
-          name: '我的权限',
-          component: () => import('@/views/auth_manage/index'),
+          path: '/workflow/my_flow',
+          name: '我的流程',
+          component: () => import('@/views/workflow/my_flow'),
+          meta: {}
+        },
+        {
+          path: '/workflow/flow_manage',
+          name: '流程管理',
+          component: () => import('@/views/workflow/flow_manage'),
+          meta: {}
+        },
+        {
+          path: '/workflow/form_store',
+          name: '表单商店',
+          component: () => import('@/views/workflow/form_store'),
+          meta: {}
+        },
+        {
+          path: '/workflow/my_form',
+          name: '我的表单',
+          component: () => import('@/views/workflow/my_form'),
+          meta: {}
+        },
+        {
+          path: '/workflow/form_manage',
+          name: '表单管理',
+          component: () => import('@/views/workflow/form_manage'),
+          meta: {}
+        },
+
+        {
+          path: '/workflow/category_manage',
+          name: '分类管理',
+          component: () => import('@/views/workflow/category_manage'),
+          meta: {}
+        },
+
+        {
+          path: '/workflow/employee_manage',
+          name: '员工管理',
+          component: () => import('@/views/workflow/employee_manage'),
+          meta: {}
+        },
+        {
+          path: '/workflow/department_manage',
+          name: '部门管理',
+          component: () => import('@/views/workflow/department_manage'),
+          meta: {}
+        },
+
+        {
+          path: '/workflow/template_store',
+          name: '模板商店',
+          component: () => import('@/views/workflow/template_store'),
+          meta: {}
+        },
+        {
+          path: '/workflow/my_template',
+          name: '我的模板',
+          component: () => import('@/views/workflow/my_template'),
+          meta: {}
+        },
+        {
+          path: '/workflow/template_manage',
+          name: '模板管理',
+          component: () => import('@/views/workflow/template_manage'),
           meta: {}
         },
       ]
     },
     {
-      path: '/form',
+      path: '/system',
       component: Layout,
-      name: '表单管理',
+      name: '系统管理',
       meta: {},
       children: [
         {
-          path: '/form/index',
-          name: '我的表单',
-          component: () => import('@/views/form_manage/index'),
-          meta: {},
+          path: '/system/user_manage',
+          name: '用户管理',
+          component: () => import('@/views/system/user_manage'),
+          meta: {}
         },
         {
-          path: '/form/module',
-          name: '模块管理',
-          component: () => import('@/views/form_manage/form_module_manage'),
-          meta: {},
-        }
-      ]
-    },
-    {
-      path: '/flow',
-      component: Layout,
-      name: '流程管理',
-      meta: {},
-      children: [
+          path: '/system/menu_manage',
+          name: '菜单管理',
+          component: () => import('@/views/system/menu_manage'),
+          meta: {}
+        },
         {
-          path: '/flow/index',
-          name: '我的流程',
-          component: () => import('@/views/flow_manage/index'),
-          meta: {},
-        }
+          path: '/system/auth_manage',
+          name: '权限管理',
+          component: () => import('@/views/system/auth_manage'),
+          meta: {}
+        },
       ]
     },
+
 
 
 

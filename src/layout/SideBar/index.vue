@@ -17,6 +17,11 @@
           </el-menu-item>
         </template>
 
+        
+
+        
+
+
         <!--二级菜单-->
         <template v-else-if="item.children && !item.hidden">
           <el-submenu
@@ -25,20 +30,25 @@
           >
 
             <template slot="title">
-              <span slot="title">{{item.name}}</span>
+              {{item.name}}
             </template>
 
             <el-menu-item
               v-for="child in item.children"
               :index="child.path"
               :key="child.path"
-            >{{child.name}}
+            >
+
+              <template slot="title">
+                {{child.name}}
+              </template>
+
             </el-menu-item>
+
           </el-submenu>
         </template>
 
       </template>
-
     </el-menu>
   </div>
 </template>

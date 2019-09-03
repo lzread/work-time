@@ -1,8 +1,7 @@
 <template>
-  <div id="authIndex">
+  <div id="MyTemplate">
 
-    authIndex
-    111
+    MyTemplate
    
   </div>
 </template>
@@ -10,7 +9,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "authIndex",
+  name: "MyTemplate",
   data() {
     return {
         
@@ -23,6 +22,3 @@ export default {
 };
 </script>
 
-<style lang="less">
-
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div id="Login">
 
     <aside>
 
@@ -11,7 +11,7 @@
             <input
               type="text"
               class="username"
-              v-model="username"
+              v-model="loginForm.username"
               :placeholder="$t('Login.usernamePlaceholderText')"
               maxlength="30"
               autocomplete="false"
@@ -28,7 +28,7 @@
             <input
               type="password"
               class="password"
-              v-model="password"
+              v-model="loginForm.password"
               :placeholder="$t('Login.passwordPlaceholderText')"
               maxlength="30"
               autocomplete="false"
@@ -53,34 +53,23 @@
 
 <script>
 export default {
-  name: "login",
+  name: "Login",
   data() {
     return {
-      username: "15001021070",
-      password: "888888"
+      loginForm: {
+        username: "admin",
+        password: "111111"
+      }
     };
   },
   methods: {
     login() {
       this.$store
-        .dispatch("login", {
-          tel: this.username,
-          pwd: this.password
+        .dispatch("user/login", this.loginForm)
+        .then(() => {
+          this.$router.push({ path: "/home" });
         })
-        .then((data) => {
-          if(data.errorCode == 1){
-            //成功
-            this.$router.push({ path: '/home' });
-
-          }else{
-            //失败
-
-          }
-        })
-        .catch(err => {
-          console.log(err);
-
-        });
+        .catch(() => {});
     }
   }
 };

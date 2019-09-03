@@ -16,9 +16,14 @@ import store from './store';
 import cookie from "@/vendor/cookie.js";
 
 import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'  
+import Icon from 'vue-awesome/components/Icon'
 
 import '@/permission'
+
+import { mockXHR } from '../mock'
+if (process.env.NODE_ENV === 'production') {
+  mockXHR()
+}
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

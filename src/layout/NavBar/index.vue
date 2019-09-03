@@ -15,7 +15,10 @@
         </el-dropdown-menu>
       </el-dropdown>
 
+
+
       <div class="block">
+
         <el-avatar
           :size="24"
           :src="circleUrl"
@@ -41,15 +44,20 @@ export default {
   name: "NavBar",
   data() {
     return {
-      user_info: JSON.parse(this.$cookice.get("UserInfo")),
-      activeIndex: "1",
       circleUrl: ""
     };
   },
   components: {  },
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    themeChange(val) {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'theme',
+        value: val
+      })
+    }
+  }
 };
 </script>
 <style lang="scss">
