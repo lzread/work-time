@@ -9,7 +9,7 @@
     >
       {{tag.name}}
       <i
-        v-show="tag.path != '/home'"
+        v-show="tag.path != '/'"
         class='el-icon-close'
         @click.prevent.stop="delSelectTag(tag)"
       ></i>

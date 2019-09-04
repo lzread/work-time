@@ -10,10 +10,8 @@ import axios from 'axios';
 import VueI18n from 'vue-i18n';
 import messages from './i18n/language';
 
-import util from './utils/util.js';
 import store from './store';
 
-import cookie from "@/vendor/cookie.js";
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -27,12 +25,10 @@ if (process.env.NODE_ENV === 'production') {
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
-Vue.prototype.$cookice = cookie
 
 Vue.use(ElementUI);
 Vue.use(router);
 Vue.use(VueI18n);
-Vue.use(util);
 
 Vue.component('v-icon', Icon)
 

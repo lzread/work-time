@@ -11,7 +11,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: '登录',
       component: () => import('@/views/login/index'),
       hidden: true,
@@ -25,9 +25,9 @@ export default new Router({
     },
 
     {
-      path: '', component: Layout, redirect: '/home',
+      path: '', component: Layout, redirect: '/',
       children: [{
-        path: '/home',
+        path: '/',
         name: '首页',
         component: () => import('@/views/home/index'),
         meta: {}

@@ -67,10 +67,11 @@ export default {
       this.$store
         .dispatch("user/login", this.loginForm)
         .then(() => {
-          this.$router.push({ path: "/home" });
+          this.$router.push({ path: "/" });
         })
         .catch(() => {});
-    }
+    },
+    
   }
 };
 </script>

@@ -7,7 +7,15 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+}
+
+const getters = {
+  token: state => state.token,
+  avatar: state => state.avatar,
+  name: state => state.name,
+  introduction: state => state.introduction,
+  roles: state => state.roles,
 }
 
 const mutations = {
@@ -126,6 +134,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

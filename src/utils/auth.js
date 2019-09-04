@@ -1,4 +1,4 @@
-import Cookies from '@/vendor/cookie'
+import Cookies from 'js-cookie'
 
 const TokenKey = 'Admin-Token'
 
