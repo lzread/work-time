@@ -1,11 +1,12 @@
 <template>
   <div id="SideBar">
+
     <el-menu
       unique-opened
       router
       :default-active="$route.path"
     >
-      <template v-for="(item,index) in $router.options.routes">
+      <template v-for="(item,index) in permission_routes">
 
         <!--一级菜单-->
         <template v-if="item.redirect && !item.path">
@@ -16,11 +17,6 @@
           >{{child.name}}
           </el-menu-item>
         </template>
-
-        
-
-        
-
 
         <!--二级菜单-->
         <template v-else-if="item.children && !item.hidden">
@@ -60,7 +56,11 @@ export default {
     return {};
   },
   created() {},
-  computed: {},
+  computed: {
+    ...mapGetters({
+      permission_routes: "permission_routes"
+    })
+  },
   methods: {}
 };
 </script>

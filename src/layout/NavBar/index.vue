@@ -32,7 +32,7 @@
             <em>Hi, {{name}} </em><i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="settings">个人设置</el-dropdown-item>
+            <el-dropdown-item command="settings" v-permission="['admin']">个人设置</el-dropdown-item>
             <el-dropdown-item command="logout">安全退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -42,12 +42,14 @@
   </div>
 </template>
 <script>
+import permission from '@/directive/permission/index.js' // 权限判断指令
 import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   name: "NavBar",
   data() {
     return {};
   },
+  directives: { permission },
   components: {},
   created() {},
   computed: {

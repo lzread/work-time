@@ -3,10 +3,14 @@ const tokens = {
   admin: {
     token: 'admin-token'
   },
+  eason: {
+    token: 'admin-token'
+  },
   editor: {
     token: 'editor-token'
   }
 }
+
 
 const users = {
   'admin-token': {

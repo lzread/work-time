@@ -1,11 +1,9 @@
 import router from './router'
 import store from './store'
-
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import defaultSettings from '@/settings'
-
-import { getToken } from '@/utils/auth' // 验权
+import { getToken } from '@/utils/auth'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -20,8 +18,25 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      next()
-      store.dispatch('user/getInfo')
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
+        next()
+      } else {
+        store.dispatch('user/getInfo').then(res => {
+          next()
+          const roles = res.roles;
+          store.dispatch('permission/generateRoutes', roles).then(accessRoutes => {
+            router.addRoutes(accessRoutes)  
+            next({ ...to, replace: true })
+          })
+        }).catch((error) => {
+          console.log(error);
+          store.dispatch('user/resetToken')
+          next(`/login?redirect=${to.path}`)
+          NProgress.done()
+        })
+      }
+
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {

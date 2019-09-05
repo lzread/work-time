@@ -1,8 +1,16 @@
 <template>
   <div id="MenuManage">
 
-    MenuManage
-   
+    <div class="condition">
+      
+      <el-button size="mini">ADD</el-button>
+
+
+
+    </div>
+
+    
+
   </div>
 </template>
 
@@ -12,13 +20,17 @@ export default {
   name: "MenuManage",
   data() {
     return {
-        
+
     };
   },
   created() {},
-  computed: {},
+  computed: {
+    ...mapGetters({
+      permission_routes: "permission_routes"
+    })
+  },
   methods: {},
-  components: { }
+  components: {}
 };
 </script>
 
