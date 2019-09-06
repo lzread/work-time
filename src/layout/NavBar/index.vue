@@ -4,17 +4,21 @@
       <el-breadcrumb-item
         v-for="item in $route.matched"
         :key="item.path"
-      >{{ item.name }}</el-breadcrumb-item>
+      >{{$t(item.name)}}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <div class="info">
-      <el-dropdown style="margin:0 10px">
+      <el-dropdown
+        style="margin:0 10px"
+        @command="local"
+        trigger="click"
+      >
         <span class="el-dropdown-link">
-          <em>中文</em><i class="el-icon-arrow-down el-icon--right"></i>
+          <em>{{local_language}}</em><i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>中文</el-dropdown-item>
-          <el-dropdown-item>En</el-dropdown-item>
+          <el-dropdown-item command="zh-CN">zh-CN</el-dropdown-item>
+          <el-dropdown-item command="en">en-US</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
 
@@ -32,7 +36,8 @@
             <em>Hi, {{name}} </em><i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="settings" v-permission="['admin']">个人设置</el-dropdown-item>
+            <el-dropdown-item command="settings">个人设置</el-dropdown-item>
+            <el-dropdown-item command="password">密码修改</el-dropdown-item>
             <el-dropdown-item command="logout">安全退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -42,12 +47,14 @@
   </div>
 </template>
 <script>
-import permission from '@/directive/permission/index.js' // 权限判断指令
+import permission from "@/directive/permission/index.js"; // 权限判断指令
 import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   name: "NavBar",
   data() {
-    return {};
+    return {
+      local_language:this.$i18n.locale,
+    };
   },
   directives: { permission },
   components: {},
@@ -59,9 +66,25 @@ export default {
     })
   },
   methods: {
+    local(command) {
+      switch (command) {
+        case "zh-CN":
+          this.$i18n.locale = 'zh-CN';
+          this.local_language = 'zh-CN';
+          break;
+        case "en":
+          this.$i18n.locale = 'en-US';
+          this.local_language = 'en-US';
+          break;
+      }
+    },
     person(command) {
       switch (command) {
         case "settings":
+          this.$router.push({ path: "/system/user_settings" });
+          break;
+        case "password":
+          this.$router.push({ path: "/system/user_password" });
           break;
         case "logout":
           this.$store

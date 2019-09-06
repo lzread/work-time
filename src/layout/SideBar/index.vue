@@ -14,7 +14,7 @@
             v-for="child in item.children"
             :index="child.path"
             :key="child.path"
-          >{{child.name}}
+          >{{$t(child.name)}}
           </el-menu-item>
         </template>
 
@@ -26,7 +26,7 @@
           >
 
             <template slot="title">
-              {{item.name}}
+              {{$t(item.name)}}
             </template>
 
             <el-menu-item
@@ -36,7 +36,7 @@
             >
 
               <template slot="title">
-                {{child.name}}
+                {{$t(child.name)}}
               </template>
 
             </el-menu-item>

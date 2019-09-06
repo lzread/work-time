@@ -8,7 +8,6 @@ import App from './App.vue';
 import router from './router';
 import axios from 'axios';
 import VueI18n from 'vue-i18n';
-import messages from './i18n/language';
 
 import store from './store';
 
@@ -32,10 +31,26 @@ Vue.use(VueI18n);
 
 Vue.component('v-icon', Icon)
 
+
+
+
+
+
+//加载i18n目录下所有语言文件
+const languageFiles = require.context('./i18n', true, /\.js$/)
+const language = languageFiles.keys().reduce((language, path) => {
+  const languageName = path.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = languageFiles(path)
+  language[languageName] = value.default
+  return language
+}, {})
+
 const i18n = new VueI18n({
-  locale: 'zh', // 设置地区
-  messages, // 设置地区信息
+  locale: 'en-US',
+  messages:language
 });
+
+
 
 new Vue({
   router,

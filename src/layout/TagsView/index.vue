@@ -7,7 +7,7 @@
       :key="tag.path"
       :class="isActive(tag)?'active':''"
     >
-      {{tag.name}}
+      {{$t(tag.name)}}
       <i
         v-show="tag.path != '/'"
         class='el-icon-close'
@@ -47,7 +47,7 @@ export default {
           if (lastView) {
             this.$router.push(lastView);
           } else {
-            this.$router.push("/home");
+            this.$router.push("/");
           }
         }
       });

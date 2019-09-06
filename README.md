@@ -1,29 +1,59 @@
 # work-time
 
-## Project setup
+#### step1
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### step2
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+#### step3
 ```
 npm run build
 ```
 
-### Run your tests
+
+
+#### 目录结构
 ```
-npm run test
+mock/
+src/
+    views/          -----------------------------   视图
+        ...
+    vendor/         -----------------------------   第三方插件
+        ...
+    utils/          -----------------------------   通用函数
+        ...
+    style/          -----------------------------   样式
+        ...
+    store/          -----------------------------   VUEX
+        modules/
+            ...
+        ...
+    router/         -----------------------------   路由
+        ...
+    layout/
+        AppMain/    -----------------------------   主区域
+            ...
+        NavBar/     -----------------------------   头部
+            ...
+        SideBar/    -----------------------------   左侧菜单
+            ...
+        TagsView/   -----------------------------   标签
+            ...
+        ...
+    i18n/           -----------------------------   国际化语言包
+        ...
+    filters/        -----------------------------   过滤器
+        ...
+    directive/      -----------------------------   指令
+        ...
+    assets/         -----------------------------   静态资源
+        ...
+    api/            -----------------------------   接口
+        ...
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
