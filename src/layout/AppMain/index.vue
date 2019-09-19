@@ -1,25 +1,16 @@
 <template>
   <div id="AppMain">
 
-    <el-main>
-
-      <transition name="slide-fade">
+    <transition name="slide-fade">
+      
         <router-view />
-      </transition>
-
-    </el-main>
+     
+    </transition>
 
   </div>
 </template>
 <script>
 export default {
-  name: "AppMain",
-  data() {
-    return {};
-  },
-  created() {},
-  computed: {},
-  methods: {},
-  components: {}
+  name: "AppMain"
 };
 </script>

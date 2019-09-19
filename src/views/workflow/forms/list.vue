@@ -1,7 +1,7 @@
 <template>
-  <div id="TemplateManage">
+  <div id="MyForm">
 
-    TemplateManage
+    MyForm
    
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "TemplateManage",
+  name: "MyForm",
   data() {
     return {
         

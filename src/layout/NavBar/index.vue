@@ -4,10 +4,10 @@
       <el-breadcrumb-item
         v-for="item in $route.matched"
         :key="item.path"
-      >{{$t(item.name)}}</el-breadcrumb-item>
+      >{{item.meta.title}}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div class="info">
+    <div class="navbar-info">
       <el-dropdown
         style="margin:0 10px"
         @command="local"
@@ -22,28 +22,26 @@
         </el-dropdown-menu>
       </el-dropdown>
 
-      <div class="block">
+      <el-avatar
+        :size="24"
+        :src="avatar"
+      ></el-avatar>
 
-        <el-avatar
-          :size="24"
-          :src="avatar"
-        ></el-avatar>
-        <el-dropdown
-          @command="person"
-          trigger="click"
-        >
-          <span class="el-dropdown-link">
-            <em>Hi, {{name}} </em><i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="settings">个人设置</el-dropdown-item>
-            <el-dropdown-item command="password">密码修改</el-dropdown-item>
-            <el-dropdown-item command="logout">安全退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
+      <el-dropdown
+        style="margin:0 10px"
+        @command="person"
+        trigger="click"
+      >
+        <span class="el-dropdown-link">
+          <em>Hi, {{name}} </em><i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="settings">个人设置</el-dropdown-item>
+          <el-dropdown-item command="password">密码修改</el-dropdown-item>
+          <el-dropdown-item command="logout">安全退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
-
   </div>
 </template>
 <script>
@@ -53,7 +51,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      local_language:this.$i18n.locale,
+      local_language: this.$i18n.locale
     };
   },
   directives: { permission },
@@ -69,12 +67,12 @@ export default {
     local(command) {
       switch (command) {
         case "zh-CN":
-          this.$i18n.locale = 'zh-CN';
-          this.local_language = 'zh-CN';
+          this.$i18n.locale = "zh-CN";
+          this.local_language = "zh-CN";
           break;
         case "en":
-          this.$i18n.locale = 'en-US';
-          this.local_language = 'en-US';
+          this.$i18n.locale = "en-US";
+          this.local_language = "en-US";
           break;
       }
     },
@@ -104,6 +102,15 @@ export default {
 .el-breadcrumb__inner {
   &:empty + .el-breadcrumb__separator {
     display: none;
+  }
+}
+.navbar-info {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  em {
+    font-style: normal;
   }
 }
 </style>

@@ -22,6 +22,8 @@ const language = {
 
         navItemCategoryManageText: 'category manage',
 
+        navItemCompanyManageText: 'company manage',
+
         navItemEmployeeManageText: 'employee manage',
 
         navItemDepartmentManageText: 'department manage',

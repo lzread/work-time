@@ -11,152 +11,173 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    name: 'SideBar.navItemLoginText',
+    name: 'login',
     hidden: true,
+    meta: {
+      title: 'login',
+    }
   },
   {
     path: '/404',
     component: () => import('@/views/error/404'),
     name: '404',
-    hidden: true
+    hidden: true,
+    meta: {
+      title: '404',
+    }
   },
   {
     path: '', component: Layout, redirect: '/',
     children: [{
       path: '/',
-      name: 'SideBar.navItemIndexText',
+      name: 'index',
       component: () => import('@/views/home/index'),
-      meta: {}
+      meta: {
+        title: '首页',
+      }
     }]
   },
 ]
 export const asyncRoutes = [
   {
-    path: '/workflow',
+    path: '/company',
     component: Layout,
-    name: 'SideBar.navItemWorkFlowText',
+    name: 'company',
     meta: {
+      title: 'company',
       roles: ['admin']
     },
     children: [
       {
-        path: '/workflow/my_flow',
-        name: 'SideBar.navItemMyWorkFlowText',
-        component: () => import('@/views/workflow/my_flow'),
-        meta: {}
-      },
-      {
-        path: '/workflow/flow_manage',
-        name: 'SideBar.navItemFlowManageText',
-        component: () => import('@/views/workflow/flow_manage'),
+        path: '/company/department',
+        name: 'department',
+        component: () => import('@/views/company/department'),
         meta: {
-          roles: ['admin']
-        },
+          title: 'department',
+        }
       },
       {
-        path: '/workflow/form_store',
-        name: 'SideBar.navItemFormStoreText',
-        component: () => import('@/views/workflow/form_store'),
-        meta: {}
-      },
-      {
-        path: '/workflow/my_form',
-        name: 'SideBar.navItemMyFormText',
-        component: () => import('@/views/workflow/my_form'),
-        meta: {}
-      },
-      {
-        path: '/workflow/form_manage',
-        name: 'SideBar.navItemFormManageText',
-        component: () => import('@/views/workflow/form_manage'),
+        path: '/forms/position',
+        name: 'position',
+        component: () => import('@/views/company/position'),
         meta: {
-          roles: ['admin']
-        },
+          title: 'position',
+        }
       },
+      {
+        path: '/forms/employee',
+        name: 'employee',
+        component: () => import('@/views/company/employee'),
+        meta: {
+          title: 'employee',
+        }
+      },
+    ]
+  },
 
+  {
+    path: '/workflow',
+    component: Layout,
+    name: 'workflow',
+    meta: {
+      title: 'workflow',
+      roles: ['admin']
+    },
+    children: [
       {
-        path: '/workflow/category_manage',
-        name: 'SideBar.navItemCategoryManageText',
-        component: () => import('@/views/workflow/category_manage'),
+        path: '/workflow/list',
+        name: 'workflowList',
+        component: () => import('@/views/workflow/list'),
         meta: {
-          roles: ['admin']
+          title: 'list',
+        }
+      },
+      {
+        path: '/workflow/category',
+        name: 'workflowCategory',
+        component: () => import('@/views/workflow/category'),
+        meta: {
+          roles: ['admin'],
+          title: 'category',
         },
       },
-
       {
-        path: '/workflow/employee_manage',
-        name: 'SideBar.navItemEmployeeManageText',
-        component: () => import('@/views/workflow/employee_manage'),
+        path: '/workflow/store',
+        name: 'workflowStore',
+        component: () => import('@/views/workflow/store'),
         meta: {
-          roles: ['admin']
-        },
+          title: 'store',
+        }
       },
       {
-        path: '/workflow/department_manage',
-        name: 'SideBar.navItemDepartmentManageText',
-        component: () => import('@/views/workflow/department_manage'),
+        path: '/workflow/create',
+        name: 'workflowCreate',
+        component: () => import('@/views/workflow/create'),
+        hidden: true,
         meta: {
-          roles: ['admin']
-        },
-      },
-
-      {
-        path: '/workflow/template_store',
-        name: 'SideBar.navItemTemplateStoreText',
-        component: () => import('@/views/workflow/template_store'),
-        meta: {}
+          title: 'create',
+        }
       },
       {
-        path: '/workflow/my_template',
-        name: 'SideBar.navItemMyTemplateText',
-        component: () => import('@/views/workflow/my_template'),
-        meta: {}
-      },
-      {
-        path: '/workflow/template_manage',
-        name: 'SideBar.navItemTemplateManageText',
-        component: () => import('@/views/workflow/template_manage'),
+        path: '/workflow/forms',
+        name: 'forms',
+        component: () => import('@/views/workflow/forms/index'),
         meta: {
-          roles: ['admin']
+          title: 'forms',
         },
+        children: [
+          {
+            path: '/workflow/forms/create',
+            name: 'formCreate',
+            component: () => import('@/views/workflow/forms/create'),
+            hidden: true,
+            meta: {
+              title: 'create',
+            },
+          },
+          {
+            path: '/workflow/forms/list',
+            name: 'formList',
+            component: () => import('@/views/workflow/forms/list'),
+            meta: {
+              title: 'list',
+            },
+          },
+          {
+            path: '/workflow/forms/store',
+            name: 'formStore',
+            component: () => import('@/views/workflow/forms/store'),
+            meta: {
+              title: 'store',
+            },
+          },
+        ]
       },
     ]
   },
   {
     path: '/system',
     component: Layout,
-    name: 'SideBar.navItemSystemManageText',
+    name: 'system',
     meta: {
-      
+      title: 'system',
     },
     children: [
       {
-        path: '/system/user_settings',
-        name: 'SideBar.navItemUserSettingsText',
-        component: () => import('@/views/system/user_settings'),
-        meta: {}
-      },
-      {
-        path: '/system/user_password',
-        name: 'SideBar.navItemPasswordModifyText',
-        component: () => import('@/views/system/user_password'),
-        meta: {}
-      },
-      {
-        path: '/system/user_manage',
-        name: 'SideBar.navItemUserManageText',
-        component: () => import('@/views/system/user_manage'),
+        path: '/system/permission',
+        name: 'permission',
+        component: () => import('@/views/system/permission'),
         meta: {
-          roles: ['admin']
-        }
+          title: 'permission',
+        },
       },
       {
-        path: '/system/auth_manage',
-        name: 'SideBar.navItemAuthManageText',
-        component: () => import('@/views/system/auth_manage'),
+        path: '/system/person',
+        name: 'person',
+        component: () => import('@/views/system/person'),
         meta: {
-          roles: ['admin']
-        }
+          title: 'person',
+        },
       },
     ]
   },

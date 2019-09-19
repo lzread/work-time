@@ -7,7 +7,7 @@
       :key="tag.path"
       :class="isActive(tag)?'active':''"
     >
-      {{$t(tag.name)}}
+      {{tag.name}}
       <i
         v-show="tag.path != '/'"
         class='el-icon-close'

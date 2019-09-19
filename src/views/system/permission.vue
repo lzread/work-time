@@ -1,15 +1,14 @@
 <template>
-  <div id="MyTemplate">
+  <div id="AuthManage">
 
-    MyTemplate
+    AuthManage
    
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "MyTemplate",
+  name: "AuthManage",
   data() {
     return {
         

@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 
-import './styles/common.scss';
-import './styles/element-variables.scss'
+import './styles/index.scss';
 
 import App from './App.vue';
 import router from './router';
@@ -29,6 +28,8 @@ Vue.use(ElementUI);
 Vue.use(router);
 Vue.use(VueI18n);
 
+
+
 Vue.component('v-icon', Icon)
 
 
@@ -47,7 +48,7 @@ const language = languageFiles.keys().reduce((language, path) => {
 
 const i18n = new VueI18n({
   locale: 'en-US',
-  messages:language
+  messages: language
 });
 
 

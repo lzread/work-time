@@ -27,7 +27,7 @@ const mutations = {
   ADD_VISITED_VIEWS: (state, view) => {
     if (state.visitedviews.some(v => v.path == view.path)) return;
     state.visitedviews.push({
-      name: view.name,
+      name: view.meta.title,
       path: view.path
     })
   },
