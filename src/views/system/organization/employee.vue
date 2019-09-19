@@ -174,7 +174,7 @@
 <script>
 import { deepClone, formatJson } from "@/utils";
 import Pagination from "@/components/Pagination";
-import { getEmployee, getDepartment, getPosition } from "@/api/company";
+import { getEmployee, getDepartment, getPosition } from "@/api/system";
 export default {
   name: "EmployeeManage",
   data() {

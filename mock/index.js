@@ -2,12 +2,12 @@ import Mock from 'mockjs'
 import { param2Obj } from '../src/utils'
 
 import user from './user'
-import workflow from './workflow'
-import company from './company'
+import flow from './flow'
+import system from './system'
 const mocks = [
   ...user,
-  ...workflow,
-  ...company
+  ...flow,
+  ...system
 ]
 
 // for front mock

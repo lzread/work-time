@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function getCategory(query) {
     return request({
-        url: '/workflow/getCategory',
+        url: '/flow/getCategory',
         method: 'get',
         params: query
     })
@@ -17,7 +17,7 @@ export function getCategory(query) {
 export function createCategory(data) {
     console.log(data);
     return request({
-        url: '/workflow/createCategory',
+        url: '/flow/createCategory',
         method: 'post',
         data: data
     })
@@ -29,7 +29,7 @@ export function createCategory(data) {
  */
 export function updateCategory(id, data) {
     return request({
-        url: '/workflow/updateCategory',
+        url: '/flow/updateCategory',
         method: 'post',
         params: { id },
         data: data
@@ -41,7 +41,7 @@ export function updateCategory(id, data) {
  */
 export function deleteCategory(id) {
     return request({
-        url: '/workflow/deleteCategory',
+        url: '/flow/deleteCategory',
         method: 'post',
         params: { id },
     })

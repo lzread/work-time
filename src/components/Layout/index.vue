@@ -3,11 +3,12 @@
 
     <el-scrollbar wrap-class="scrollbar-wrapper">
 
-      <side-bar />
-
       <nav-bar />
+      <side-bar />
       <tags-view />
       <app-main />
+
+      <create-flow></create-flow>
 
     </el-scrollbar>
 
@@ -30,8 +31,21 @@ import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 import AppMain from "./AppMain";
 import TagsView from "./TagsView";
+
+import CreateFlow from "@/components/Flow/create";
+
 export default {
   name: "Layout",
-  components: { NavBar, SideBar, AppMain, TagsView }
+  components: { NavBar, SideBar, AppMain, TagsView, CreateFlow }
 };
 </script>
+
+<style lang="scss" scoped>
+#Layout {
+  padding: 0 0 0 200px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+</style>

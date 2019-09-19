@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 
-import Layout from '@/layout'
+import Layout from '@/components/Layout'
 
 
 Vue.use(Router)
@@ -33,128 +33,103 @@ export const constantRoutes = [
       name: 'index',
       component: () => import('@/views/home/index'),
       meta: {
-        title: '首页',
+        title: 'index',
       }
     }]
   },
 ]
 export const asyncRoutes = [
   {
-    path: '/company',
+    path: '/flow',
     component: Layout,
-    name: 'company',
+    name: 'flow',
     meta: {
-      title: 'company',
+      title: 'flow',
       roles: ['admin']
     },
     children: [
       {
-        path: '/company/department',
-        name: 'department',
-        component: () => import('@/views/company/department'),
-        meta: {
-          title: 'department',
-        }
-      },
-      {
-        path: '/forms/position',
-        name: 'position',
-        component: () => import('@/views/company/position'),
-        meta: {
-          title: 'position',
-        }
-      },
-      {
-        path: '/forms/employee',
-        name: 'employee',
-        component: () => import('@/views/company/employee'),
-        meta: {
-          title: 'employee',
-        }
-      },
-    ]
-  },
-
-  {
-    path: '/workflow',
-    component: Layout,
-    name: 'workflow',
-    meta: {
-      title: 'workflow',
-      roles: ['admin']
-    },
-    children: [
-      {
-        path: '/workflow/list',
-        name: 'workflowList',
-        component: () => import('@/views/workflow/list'),
+        path: '/flow/list',
+        name: 'flowList',
+        component: () => import('@/views/flow/list'),
         meta: {
           title: 'list',
         }
       },
       {
-        path: '/workflow/category',
-        name: 'workflowCategory',
-        component: () => import('@/views/workflow/category'),
+        path: '/flow/settings/index',
+        name: 'flowSettings',
+        component: () => import('@/views/flow/settings/index'),
         meta: {
           roles: ['admin'],
-          title: 'category',
+          title: 'flow settings',
         },
+        children: [
+          {
+            path: '/flow/settings/category',
+            name: 'flowCategory',
+            component: () => import('@/views/flow/settings/category'),
+            meta: {
+              roles: ['admin'],
+              title: 'flow category',
+            },
+          },
+          {
+            path: '/flow/settings/template',
+            name: 'flowTemplate',
+            component: () => import('@/views/flow/settings/template'),
+            meta: {
+              title: 'flow template',
+            }
+          },
+        ],
       },
       {
-        path: '/workflow/store',
-        name: 'workflowStore',
-        component: () => import('@/views/workflow/store'),
-        meta: {
-          title: 'store',
-        }
-      },
-      {
-        path: '/workflow/create',
-        name: 'workflowCreate',
-        component: () => import('@/views/workflow/create'),
-        hidden: true,
-        meta: {
-          title: 'create',
-        }
-      },
-      {
-        path: '/workflow/forms',
+        path: '/flow/forms',
         name: 'forms',
-        component: () => import('@/views/workflow/forms/index'),
+        component: () => import('@/views/flow/forms/index'),
         meta: {
           title: 'forms',
         },
         children: [
           {
-            path: '/workflow/forms/create',
+            path: '/flow/forms/create',
             name: 'formCreate',
-            component: () => import('@/views/workflow/forms/create'),
+            component: () => import('@/views/flow/forms/create'),
             hidden: true,
             meta: {
-              title: 'create',
+              title: 'form create',
             },
           },
           {
-            path: '/workflow/forms/list',
+            path: '/flow/forms/list',
             name: 'formList',
-            component: () => import('@/views/workflow/forms/list'),
+            component: () => import('@/views/flow/forms/list'),
             meta: {
               title: 'list',
             },
           },
           {
-            path: '/workflow/forms/store',
+            path: '/flow/forms/store',
             name: 'formStore',
-            component: () => import('@/views/workflow/forms/store'),
+            component: () => import('@/views/flow/forms/store'),
             meta: {
               title: 'store',
             },
           },
         ]
       },
+      {
+        path: '/flow/store',
+        name: 'flowStore',
+        component: () => import('@/views/flow/store'),
+        meta: {
+          title: 'flow store',
+        }
+      },
     ]
   },
+
   {
     path: '/system',
     component: Layout,
@@ -172,12 +147,31 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/system/person',
-        name: 'person',
-        component: () => import('@/views/system/person'),
+        path: '/system/organization/index',
+        component: () => import('@/views/system/organization/index'),
+        name: 'systemOrganization',
         meta: {
-          title: 'person',
+          title: 'organization',
+          roles: ['admin']
         },
+        children: [
+          {
+            path: '/system/organization/department',
+            name: 'department',
+            component: () => import('@/views/system/organization/department'),
+            meta: {
+              title: 'department',
+            }
+          },
+          {
+            path: '/system/organization/employee',
+            name: 'employee',
+            component: () => import('@/views/system/organization/employee'),
+            meta: {
+              title: 'employee',
+            }
+          },
+        ]
       },
     ]
   },

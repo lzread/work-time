@@ -20,7 +20,7 @@ for (let i = 0; i < count; i++) {
 
 export default [
     {
-        url: '/workflow/getCategory',
+        url: '/flow/getCategory',
         type: 'get',
         response: config => {
             const { page, limit } = config.query
@@ -39,7 +39,7 @@ export default [
         }
     },
     {
-        url: '/workflow/createCategory',
+        url: '/flow/createCategory',
         type: 'post',
         response: _ => {
             return {
@@ -49,7 +49,7 @@ export default [
         }
     },
     {
-        url: '/workflow/updateCategory',
+        url: '/flow/updateCategory',
         type: 'post',
         response: _ => {
             return {
@@ -59,7 +59,7 @@ export default [
         }
     },
     {
-        url: '/workflow/deleteCategory',
+        url: '/flow/deleteCategory',
         type: 'post',
         response: _ => {
             return {

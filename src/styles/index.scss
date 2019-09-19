@@ -13,10 +13,6 @@ body {
   margin: 0;
 }
 
-label {
-  font-weight: 700;
-}
-
 html {
   height: 100%;
   box-sizing: border-box;
@@ -83,124 +79,39 @@ div:focus {
 }
 
 
-#Layout {
-  padding: 0 0 0 200px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  position: relative;
 
-  #SideBar {
-    width: 200px;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    border-right: 1px solid #e6e6e6;
 
-    .el-menu {
-      border: 0;
 
-      .el-menu-item,
-      .el-submenu__title,
-      .el-submenu .el-menu-item {
-        height: 40px;
-        line-height: 40px;
-      }
-    }
+.search-bar {
+  padding: 5px;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  align-items: center;
+
+  .el-form-item--mini.el-form-item {
+    margin: 0;
   }
 
-  #NavBar {
-    width: calc(100% - 200px);
-    height: 55px;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    border-bottom: 1px solid #e6e6e6;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 9;
-    background-color: #fff;
-    padding: 0 5px;
-    box-sizing: border-box;
-  }
+  .cell {
+    flex-grow: 1;
 
-  #TagsView {
-    width: calc(100% - 200px);
-    height: 35px;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    border-bottom: 1px solid #e6e6e6;
-    position: fixed;
-    right: 0;
-    top: 55px;
-    z-index: 9;
-    background-color: #fff;
-    padding: 0 2.5px;
-    box-sizing: border-box;
-    font-size: 12px;
-
-    span {
-      border: 1px solid #e6e6e6;
-      margin: 0 2.5px;
+    &:last-child {
       display: flex;
-      display: -webkit-flex;
-      align-items: center;
-      height: 25px;
-      padding: 0 5px;
-      cursor: pointer;
-
-      i {
-        margin: 0 0 0 5px;
-
-        &:hover {
-          background-color: #e6e6e6;
-          color: #fff;
-          transition: all 0.5s;
-        }
-      }
-
-      &.active {
-        background-color: #e6e6e6;
-        border-color: #e6e6e6;
-      }
+      justify-content: flex-end;
     }
   }
+}
 
-  #AppMain {
-    margin-top: 90px;
+.data-area {
+  .el-table {
 
-    .search-bar {
-      padding: 5px;
-      border-bottom: 1px solid #e6e6e6;
-      display: flex;
-      align-items: center;
-
-      .el-form-item--mini.el-form-item {
-        margin: 0;
-      }
-      .cell{
-        &:last-child{justify-items: flex-end;}
-      }
+    td,
+    th {
+      padding: 5px 0;
     }
 
-    .data-area {
-      .el-table {
-
-        td,
-        th {
-          padding: 5px 0;
-        }
-
-        .el-image {
-          overflow: visible;
-        }
-      }
+    .el-image {
+      overflow: visible;
     }
-
-
   }
-
 }

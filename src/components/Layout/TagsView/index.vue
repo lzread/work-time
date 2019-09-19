@@ -60,3 +60,50 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+#TagsView {
+  width: calc(100% - 200px);
+  height: 35px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  border-bottom: 1px solid #e6e6e6;
+  position: fixed;
+  right: 0;
+  top: 55px;
+  z-index: 9;
+  background-color: #fff;
+  padding: 0 2.5px;
+  box-sizing: border-box;
+  font-size: 12px;
+
+  span {
+    border: 1px solid #eee;
+    margin: 0 2.5px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    padding: 0 5px;
+    cursor: pointer;
+    color: #ccc;
+    background-color: #f9f9f9;
+
+    i {
+      margin: 0 0 0 5px;
+      &:hover {
+        color: #333;
+        transition: all 0.5s;
+      }
+    }
+
+    &.active {
+      background-color: #fff;
+      border-color: #e6e6e6;
+      color: #333;
+    }
+  }
+}
+</style>

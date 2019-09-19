@@ -1,5 +1,7 @@
 <template>
   <div id="NavBar">
+    <div class="brand">LOGO</div>
+    
     <el-breadcrumb separator="/">
       <el-breadcrumb-item
         v-for="item in $route.matched"
@@ -98,19 +100,35 @@ export default {
 };
 </script>
 <style lang="scss">
-//隐藏没有顶级菜单的二级菜单前面的"/"
-.el-breadcrumb__inner {
-  &:empty + .el-breadcrumb__separator {
-    display: none;
-  }
-}
-.navbar-info {
-  flex-grow: 1;
+#NavBar {
+  width: 100%;
+  height: 55px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  em {
-    font-style: normal;
+  border-bottom: 1px solid #e6e6e6;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  background-color: #fff;
+  box-sizing: border-box;
+  .brand {
+    width: 200px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #e6e6e6;
+  }
+  .navbar-info {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    em {
+      font-style: normal;
+    }
   }
 }
+
 </style>

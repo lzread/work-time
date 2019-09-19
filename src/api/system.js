@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function getDepartment(query) {
     return request({
-        url: '/workflow/getDepartment',
+        url: '/system/getDepartment',
         method: 'get',
         params: query
     })
@@ -15,7 +15,7 @@ export function getDepartment(query) {
  */
 export function getPosition(query) {
     return request({
-        url: '/workflow/getPosition',
+        url: '/system/getPosition',
         method: 'get',
         params: query
     })
@@ -25,7 +25,7 @@ export function getPosition(query) {
  */
 export function getEmployee(query) {
     return request({
-        url: '/workflow/getEmployee',
+        url: '/system/getEmployee',
         method: 'get',
         params: query
     })

@@ -51,9 +51,37 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 @import "~element-ui/packages/theme-chalk/src/mixins/mixins";
+
 @include b(table) {
   font-size: 12px;
 }
+
 @include b(breadcrumb) {
   font-size: 12px;
+}
+
+.el-input__inner {
+  padding: 0 5px;
+}
+
+.el-menu {
+  border: 0;
+
+  .el-menu-item,
+  .el-submenu__title,
+  .el-submenu .el-menu-item {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+//隐藏没有顶级菜单的二级菜单前面的"/"
+.el-breadcrumb {
+  padding: 0 5px;
+
+  .el-breadcrumb__inner {
+    &:empty+.el-breadcrumb__separator {
+      display: none;
+    }
+  }
 }

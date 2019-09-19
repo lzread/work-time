@@ -110,7 +110,7 @@
 <script>
 import { deepClone, formatJson } from "@/utils";
 import Pagination from "@/components/Pagination";
-import { getPosition } from "@/api/company";
+import { getPosition } from "@/api/system";
 export default {
   name: "position",
   data() {
