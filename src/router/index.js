@@ -139,6 +139,22 @@ export const asyncRoutes = [
     },
     children: [
       {
+        path: '/system/companyInfo',
+        name: 'companyInfo',
+        component: () => import('@/views/system/companyInfo'),
+        meta: {
+          title: 'company info',
+        }
+      },
+      {
+        path: '/system/organization',
+        name: 'organization',
+        component: () => import('@/views/system/organization'),
+        meta: {
+          title: 'organization',
+        }
+      },
+      {
         path: '/system/permission',
         name: 'permission',
         component: () => import('@/views/system/permission'),
@@ -146,33 +162,7 @@ export const asyncRoutes = [
           title: 'permission',
         },
       },
-      {
-        path: '/system/organization/index',
-        component: () => import('@/views/system/organization/index'),
-        name: 'systemOrganization',
-        meta: {
-          title: 'organization',
-          roles: ['admin']
-        },
-        children: [
-          {
-            path: '/system/organization/department',
-            name: 'department',
-            component: () => import('@/views/system/organization/department'),
-            meta: {
-              title: 'department',
-            }
-          },
-          {
-            path: '/system/organization/employee',
-            name: 'employee',
-            component: () => import('@/views/system/organization/employee'),
-            meta: {
-              title: 'employee',
-            }
-          },
-        ]
-      },
+      
     ]
   },
 ]

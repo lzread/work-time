@@ -92,6 +92,8 @@ div:focus {
     margin: 0;
   }
 
+
+
   .cell {
     flex-grow: 1;
 
@@ -112,6 +114,38 @@ div:focus {
 
     .el-image {
       overflow: visible;
+    }
+  }
+}
+
+.tree-area {
+  display: flex;
+
+  .tree {
+    width: 350px;
+    flex-grow: 0;
+
+    .filter {
+      .el-input__inner {
+        border: 0;
+        border-bottom: 1px solid #e6e6e6;
+        height: 34px;
+        line-height: 34px;
+      }
+
+    }
+  }
+
+  .area {
+    flex-grow: 1;
+    border-left: 1px solid #e6e6e6;
+
+    .el-table {
+
+      td,
+      th {
+        padding: 5px 0;
+      }
     }
   }
 }

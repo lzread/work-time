@@ -23,9 +23,9 @@ export function getPosition(query) {
 /**
  * 员工列表
  */
-export function getEmployee(query) {
+export function getEmployeeByDepartmentId(query) {
     return request({
-        url: '/system/getEmployee',
+        url: '/system/getEmployeeByDepartmentId',
         method: 'get',
         params: query
     })

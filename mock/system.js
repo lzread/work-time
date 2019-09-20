@@ -1,6 +1,6 @@
 
 import Mock from 'mockjs'
-const count = 100;
+const count = 1000;
 const Random = Mock.Random;
 
 const Department = [
@@ -128,8 +128,26 @@ const Position = [
 ];
 const Employee = [];
 
+
+const depData = function () {
+    let query = {};
+    return {
+        depName: function (id, items) {
+            for (let i in items) {
+                if (items[i].id === id) {
+                    query = items[i];
+                } else {
+                    this.depName(id, items[i].children);
+                }
+            }
+            return query;
+        }
+    }
+}
+
 for (let i = 0; i < count; i++) {
-    let dep = Department[Math.ceil(Math.random() * Department.length - 1)];
+    let dep = new depData();
+    let d = dep.depName(Math.ceil(Math.random() * 14), Department);
     let pos = Position[Math.ceil(Math.random() * Position.length - 1)];
     Employee.push(Mock.mock({
         id: Random.id(),
@@ -139,12 +157,15 @@ for (let i = 0; i < count; i++) {
         tel: Random.natural(),
         mail: Random.email(),
         address: Random.county(true),
-        department_id: dep.id,
-        department_name: dep.name,
+        department_id: d.id,
+        department_name: d.name,
         position_id: pos.id,
         position_name: pos.name,
     }))
 }
+
+
+
 
 
 
@@ -180,12 +201,14 @@ export default [
         }
     },
     {
-        url: '/system/getEmployee',
+        url: '/system/getEmployeeByDepartmentId',
         type: 'get',
         response: config => {
-            const { page, limit } = config.query
+            const { department_id, page, limit } = config.query
 
-            let mockList = Employee;
+            let mockList = Employee.filter(item => {
+                return item.department_id == department_id;
+            });
 
             const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
 
