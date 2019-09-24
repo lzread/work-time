@@ -157,6 +157,7 @@ for (let i = 0; i < count; i++) {
         tel: Random.natural(),
         mail: Random.email(),
         address: Random.county(true),
+        freeze:0,
         department_id: d.id,
         department_name: d.name,
         position_id: pos.id,

@@ -137,7 +137,7 @@
           :total="total"
           :page.sync="listQuery.page"
           :limit.sync="listQuery.limit"
-          @pagination="getEmployeeByDepartmentId"
+          @pagination="getUsersListByDepartmentId"
         />
 
       </div>
@@ -148,7 +148,7 @@
 
 <script>
 import { deepClone, formatJson } from "@/utils";
-import { getDepartment, getEmployeeByDepartmentId } from "@/api/system";
+import { getDepartment, getUsersListByDepartmentId } from "@/api/user";
 import Pagination from "@/components/Pagination";
 export default {
   name: "DepartmentManage",
@@ -191,14 +191,10 @@ export default {
       });
     },
 
-    getEmployeeByDepartmentId() {
+    getUsersListByDepartmentId() {
       this.employeeListLoading = true;
       let department_id = this.$refs.tree.getCurrentNode().id;
-      let query = Object.assign(
-        { department_id: department_id },
-        this.listQuery
-      );
-      getEmployeeByDepartmentId(query).then(response => {
+      getUsersListByDepartmentId(department_id, this.listQuery).then(response => {
         this.employeeList = response.data.items;
         this.total = response.data.total;
         this.employeeListLoading = false;
@@ -206,7 +202,7 @@ export default {
     },
 
     handleDepartmentNodeClick(data) {
-      this.getEmployeeByDepartmentId();
+      this.getUsersListByDepartmentId();
       this.listQuery.page = 1;
     }
   },

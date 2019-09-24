@@ -45,7 +45,7 @@ export const asyncRoutes = [
     name: 'flow',
     meta: {
       title: 'flow',
-      roles: ['admin']
+
     },
     children: [
       {
@@ -61,7 +61,7 @@ export const asyncRoutes = [
         name: 'flowSettings',
         component: () => import('@/views/flow/settings/index'),
         meta: {
-          roles: ['admin'],
+
           title: 'flow settings',
         },
         children: [
@@ -79,6 +79,7 @@ export const asyncRoutes = [
             name: 'flowTemplate',
             component: () => import('@/views/flow/settings/template'),
             meta: {
+              roles: ['admin'],
               title: 'flow template',
             }
           },
@@ -136,6 +137,7 @@ export const asyncRoutes = [
     name: 'system',
     meta: {
       title: 'system',
+      roles: ['admin'],
     },
     children: [
       {
@@ -162,7 +164,7 @@ export const asyncRoutes = [
           title: 'permission',
         },
       },
-      
+
     ]
   },
 ]

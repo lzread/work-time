@@ -8,17 +8,18 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo(id) {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/user/getInfo/' + id,
+    method: 'get'
   })
 }
 
-export function logout() {
+export function getUsersListByDepartmentId(department_id, query) {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: '/user/getUsersListByDepartmentId/' + department_id,
+    method: 'get',
+    params: query
   })
 }
+

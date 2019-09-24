@@ -5,7 +5,7 @@
       <el-button
         size="mini"
         icon="el-icon-plus"
-        @click="create" 
+        @click="create"
       ></el-button>
 
       <el-button
@@ -17,7 +17,9 @@
       </el-button>
 
       <el-button
-        size="mini" style="float:right" icon="el-icon-search"
+        size="mini"
+        style="float:right"
+        icon="el-icon-search"
       ></el-button>
 
     </div>
@@ -27,24 +29,13 @@
         :data="list"
         v-loading="listLoading"
       >
-        <el-table-column label="Icon">
-          <template slot-scope="scope">
-            <el-image
-              style="width: 24px; height: 24px"
-              :src="scope.row.icon"
-            ></el-image>
-          </template>
-        </el-table-column>
+
         <el-table-column
           prop="name"
           label="Name"
         >
         </el-table-column>
-        <el-table-column
-          prop="createtime"
-          label="Create time"
-        >
-        </el-table-column>
+
         <el-table-column label="Options">
           <template slot-scope="scope">
             <el-button
@@ -120,12 +111,7 @@
 <script>
 import { deepClone, formatJson } from "@/utils";
 import Pagination from "@/components/Pagination";
-import {
-  createCategory,
-  updateCategory,
-  deleteCategory,
-  getCategory
-} from "@/api/flow";
+import { getUsersListByDepartmentId } from "@/api/user";
 export default {
   name: "CategoryManage",
   data() {
@@ -140,7 +126,7 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 5
       }
     };
   },
@@ -151,9 +137,9 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      getCategory(this.listQuery).then(response => {
-        this.list = response.data.items;
-        this.total = response.data.total;
+      getUsersListByDepartmentId(2,this.listQuery).then(response => {
+        this.list = response.data;
+        this.total = response.total;
         this.listLoading = false;
       });
     },
@@ -162,15 +148,6 @@ export default {
       this.dialogVisible = true;
     },
     confirm() {
-      if (this.dialogType == "create") {
-        createCategory(this.row).then(response => {
-          this.$message("success");
-        });
-      } else {
-        updateCategory(this.row.id, this.row).then(response => {
-          this.$message("success");
-        });
-      }
       this.dialogVisible = false;
     },
     cancel() {
@@ -201,12 +178,7 @@ export default {
       this.row = deepClone(row);
       this.dialogVisible = true;
     },
-    handleDelete({ $index, row }) {
-      deleteCategory(row.id).then(response => {
-        this.list.splice($index, 1);
-        this.$message("success");
-      });
-    }
+    handleDelete({ $index, row }) {}
   },
   components: { Pagination }
 };

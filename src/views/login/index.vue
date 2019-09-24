@@ -52,26 +52,28 @@
 </template>
 
 <script>
+import md5 from "js-md5";
 export default {
   name: "Login",
   data() {
     return {
       loginForm: {
-        username: "admin",
-        password: "111111"
+        username: "130",
+        password: "123"
       }
     };
   },
   methods: {
     login() {
+      this.loginForm.password = md5(this.loginForm.password);
+      console.log(this.loginForm.password);
       this.$store
         .dispatch("user/login", this.loginForm)
         .then(() => {
           this.$router.push({ path: "/" });
         })
         .catch(() => {});
-    },
-    
+    }
   }
 };
 </script>
