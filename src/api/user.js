@@ -1,5 +1,9 @@
 import request from '@/utils/request'
 
+/**
+ * 登录
+ * @param {*} data 登录信息
+ */
 export function login(data) {
   return request({
     url: '/user/login',
@@ -8,6 +12,10 @@ export function login(data) {
   })
 }
 
+/**
+ * 获取用户信息
+ * @param {*} id 用户ID
+ */
 export function getInfo(id) {
   return request({
     url: '/user/getInfo/' + id,
@@ -15,11 +23,17 @@ export function getInfo(id) {
   })
 }
 
-export function getUsersListByDepartmentId(department_id, query) {
+/**
+ * 获取用户列表
+ * @param {*} id 部门ID
+ * @param {*} query 分页参数
+ */
+export function getUsersList(id, query) {
   return request({
-    url: '/user/getUsersListByDepartmentId/' + department_id,
+    url: '/user/getList/' + id,
     method: 'get',
     params: query
   })
 }
+
 

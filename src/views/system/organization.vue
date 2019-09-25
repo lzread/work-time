@@ -7,11 +7,13 @@
           size="mini"
           icon="el-icon-plus"
           :disabled="depButtons.create"
+          @click="depVisible('create')"
         >创建部门</el-button>
         <el-button
           size="mini"
           icon="el-icon-edit"
           :disabled="depButtons.edit"
+          @click="depVisible('edit')"
         >编辑部门</el-button>
         <el-button
           size="mini"
@@ -62,7 +64,7 @@
         ></el-input>
         <el-tree
           ref="tree"
-          :data="departmentList"
+          :data="depList"
           :props="defaultProps"
           :default-expand-all="true"
           :highlight-current="true"
@@ -73,8 +75,8 @@
       </div>
       <div class="area">
         <el-table
-          :data="employeeList"
-          v-loading="employeeListLoading"
+          :data="empList"
+          v-loading="empListLoading"
         >
           <el-table-column
             type="selection"
@@ -84,11 +86,13 @@
           <el-table-column
             prop="name"
             label="姓名"
+            width="100"
             sortable
           ></el-table-column>
           <el-table-column
             prop="sex"
             label="性别"
+            width="100"
             sortable
           >
             <template slot-scope="scope">
@@ -118,6 +122,10 @@
               <el-button
                 type="text"
                 size="mini"
+              >重置密码</el-button>
+              <el-button
+                type="text"
+                size="mini"
               >发送消息</el-button>
               <el-button
                 type="text"
@@ -137,30 +145,78 @@
           :total="total"
           :page.sync="listQuery.page"
           :limit.sync="listQuery.limit"
-          @pagination="getUsersListByDepartmentId"
+          @pagination="getUsersList"
         />
 
       </div>
     </div>
+
+    <el-dialog
+      :title="depDialogs.dialogType === 'edit' ? '编辑部门' : '新建部门'"
+      :visible.sync="depDialogs.dialogVisible"
+      width="30%"
+    >
+      <el-form
+        ref="form"
+        :model="depRow"
+        label-width="80px"
+        size="mini"
+      >
+
+        <el-form-item label="上级部门" v-show="depDialogs.dialogType === 'create'">
+          <el-input
+            v-model="depParentName"
+            readonly
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="部门名称">
+          <el-input v-model="depRow.name"></el-input>
+        </el-form-item>
+
+        <el-form-item size="large">
+          <el-button
+            size="mini"
+            @click="depConfirm"
+          >Confirm</el-button>
+          <el-button
+            size="mini"
+            @click="depCancel"
+          >Cancel</el-button>
+        </el-form-item>
+      </el-form>
+
+    </el-dialog>
 
   </div>
 </template>
 
 <script>
 import { deepClone, formatJson } from "@/utils";
-import { getDepartment, getUsersListByDepartmentId } from "@/api/user";
+import { getUsersList } from "@/api/user";
+import {
+  createDepartments,
+  editDepartments,
+  getDepartmentsTreeList
+} from "@/api/department";
 import Pagination from "@/components/Pagination";
 export default {
   name: "DepartmentManage",
   data() {
     return {
-      departmentList: [],
-      employeeList: [],
-      employeeListLoading: false,
+      depList: [],
+      depRow: {},
+      depParentName: "",
+      empList: [],
+      empListLoading: false,
       depButtons: {
         create: true,
         edit: true,
         delete: true
+      },
+      depDialogs: {
+        dialogType: "",
+        dialogVisible: false
       },
       empButtons: {
         freeze: true,
@@ -181,29 +237,70 @@ export default {
     };
   },
   created() {
-    this.getDepartment();
+    this.getDepartmentsTreeList();
   },
   computed: {},
   methods: {
-    getDepartment() {
-      getDepartment().then(response => {
-        this.departmentList = response.data;
+    depVisible(type) {
+      this.depRow = {};
+      this.depParentName = "";
+      if (type == "create") {
+        this.depDialogs.dialogType = "create";
+        this.depDialogs.dialogVisible = true;
+        this.depRow.parentId = this.$refs.tree.getCurrentNode().id;
+        this.depParentName = this.$refs.tree.getCurrentNode().name;
+      } else {
+        this.depDialogs.dialogType = "edit";
+        this.depDialogs.dialogVisible = true;
+        this.depRow = deepClone(this.$refs.tree.getCurrentNode());
+      }
+    },
+    depConfirm() {
+      if (this.depDialogs.dialogType == "create") {
+        createDepartments(this.depRow).then(response => {
+          this.depDialogs.dialogVisible = false;
+          this.getDepartmentsTreeList();
+          console.log(response);
+        });
+      } else {
+        editDepartments(this.depRow).then(response => {
+          this.depDialogs.dialogVisible = false;
+          this.getDepartmentsTreeList();
+          console.log(response);
+        });
+      }
+    },
+    depCancel() {
+      this.depDialogs.dialogVisible = false;
+    },
+
+    getDepartmentsTreeList() {
+      getDepartmentsTreeList(1).then(response => {
+        this.depList = response.data;
       });
     },
 
-    getUsersListByDepartmentId() {
-      this.employeeListLoading = true;
+    getUsersList() {
+      this.empListLoading = true;
       let department_id = this.$refs.tree.getCurrentNode().id;
-      getUsersListByDepartmentId(department_id, this.listQuery).then(response => {
-        this.employeeList = response.data.items;
-        this.total = response.data.total;
-        this.employeeListLoading = false;
+      getUsersList(department_id, this.listQuery).then(response => {
+        this.empList = response.data;
+        this.total = response.total;
+        this.empListLoading = false;
       });
     },
 
     handleDepartmentNodeClick(data) {
-      this.getUsersListByDepartmentId();
+      this.getUsersList();
       this.listQuery.page = 1;
+      this.depButtons.create = false;
+      if (this.$refs.tree.getCurrentNode().parentId) {
+        this.depButtons.edit = false;
+        this.depButtons.delete = false;
+      } else {
+        this.depButtons.edit = true;
+        this.depButtons.delete = true;
+      }
     }
   },
   components: { Pagination }
