@@ -19,6 +19,7 @@
           size="mini"
           icon="el-icon-delete"
           :disabled="depButtons.delete"
+          @click="depDelete()"
         >删除部门</el-button>
       </div>
       <div class="cell">
@@ -59,6 +60,7 @@
         <el-input
           class="filter"
           size="mini"
+          v-model="filterText"
           placeholder="输入部门名称进行过滤"
           suffix-icon="el-icon-search"
         ></el-input>
@@ -68,9 +70,10 @@
           :props="defaultProps"
           :default-expand-all="true"
           :highlight-current="true"
-          :current-node-key="0"
+          node-key="id"
           :expand-on-click-node="false"
-          @node-click="handleDepartmentNodeClick"
+          :filter-node-method="filterNode"
+          @node-click="depNodeClick"
         ></el-tree>
       </div>
       <div class="area">
@@ -156,18 +159,23 @@
       :visible.sync="depDialogs.dialogVisible"
       width="30%"
     >
+
       <el-form
         ref="form"
         :model="depRow"
-        label-width="80px"
+        label-width="60px"
         size="mini"
       >
-
-        <el-form-item label="上级部门" v-show="depDialogs.dialogType === 'create'">
+        <el-form-item label="上级部门">
           <el-input
+            style="width:calc(100% - 60px);"
             v-model="depParentName"
             readonly
           ></el-input>
+          <el-button
+            size="mini"
+            @click="depSelect"
+          >选择</el-button>
         </el-form-item>
 
         <el-form-item label="部门名称">
@@ -188,18 +196,23 @@
 
     </el-dialog>
 
+    <select-dep @callback="depCallback"></select-dep>
+
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { deepClone, formatJson } from "@/utils";
 import { getUsersList } from "@/api/user";
 import {
   createDepartments,
   editDepartments,
+  deleteDepartments,
   getDepartmentsTreeList
 } from "@/api/department";
 import Pagination from "@/components/Pagination";
+import SelectDep from "@/components/Department/select";
 export default {
   name: "DepartmentManage",
   data() {
@@ -209,6 +222,7 @@ export default {
       depParentName: "",
       empList: [],
       empListLoading: false,
+      depSelectDialogVisible: false,
       depButtons: {
         create: true,
         edit: true,
@@ -229,6 +243,7 @@ export default {
         children: "children",
         label: "name"
       },
+      filterText: "",
       total: 0,
       listQuery: {
         page: 1,
@@ -236,46 +251,123 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters({
+      current: "department/currentNode"
+    })
+  },
   created() {
-    this.getDepartmentsTreeList();
+    this.depTreeList();
+  },
+  watch: {
+    filterText(val) {
+      this.$refs.tree.filter(val);
+    }
   },
   computed: {},
   methods: {
     depVisible(type) {
       this.depRow = {};
-      this.depParentName = "";
+      
       if (type == "create") {
         this.depDialogs.dialogType = "create";
         this.depDialogs.dialogVisible = true;
         this.depRow.parentId = this.$refs.tree.getCurrentNode().id;
+
         this.depParentName = this.$refs.tree.getCurrentNode().name;
+
       } else {
         this.depDialogs.dialogType = "edit";
         this.depDialogs.dialogVisible = true;
         this.depRow = deepClone(this.$refs.tree.getCurrentNode());
+
+        //this.depParentName = this.$refs.tree.getCurrentNode().name;
+        
       }
     },
     depConfirm() {
       if (this.depDialogs.dialogType == "create") {
         createDepartments(this.depRow).then(response => {
           this.depDialogs.dialogVisible = false;
-          this.getDepartmentsTreeList();
+          this.depTreeList();
           console.log(response);
         });
       } else {
         editDepartments(this.depRow).then(response => {
           this.depDialogs.dialogVisible = false;
-          this.getDepartmentsTreeList();
+          this.depTreeList();
           console.log(response);
         });
       }
+    },
+    depDelete() {
+      let department_id = this.$refs.tree.getCurrentNode().id;
+      let department_name = this.$refs.tree.getCurrentNode().name;
+      let department_children = this.$refs.tree.getCurrentNode().children;
+      let msg = "";
+
+      if (department_children) {
+        msg = "[ " + department_name + " ] 下包含子部门,是否删除?";
+      } else {
+        msg = "是否删除 [ " + department_name + " ] ?";
+      }
+
+      this.$confirm(msg, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteDepartments(department_id).then(response => {
+            this.depTreeList();
+          });
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {});
     },
     depCancel() {
       this.depDialogs.dialogVisible = false;
     },
 
-    getDepartmentsTreeList() {
-      getDepartmentsTreeList(1).then(response => {
+    /**
+     * VUEX 选择部门
+     */
+    depSelect() {
+      //打开弹出层
+      this.$store.dispatch("department/setDialogVisible", true);
+      //传递当前选择节点
+      this.$store.dispatch(
+        "department/setCurrentNode",
+        this.$refs.tree.getCurrentNode()
+      );
+    },
+    /**
+     * 选择部门回调
+     * @param {*} item 当前选择节点
+     */
+    depCallback(item) {
+      console.log(item);
+      this.$refs.tree.setCurrentKey(item.id);
+      if(this.depDialogs.dialogType == "create"){
+        this.depRow.parentId = item.id;
+        this.depParentName = item.name;
+      }else{
+        this.depRow.parentId = item.id;
+        this.depParentName = item.name;
+      }
+
+    },
+
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.name.indexOf(value) !== -1;
+    },
+
+    depTreeList() {
+      getDepartmentsTreeList().then(response => {
         this.depList = response.data;
       });
     },
@@ -290,7 +382,7 @@ export default {
       });
     },
 
-    handleDepartmentNodeClick(data) {
+    depNodeClick(data) {
       this.getUsersList();
       this.listQuery.page = 1;
       this.depButtons.create = false;
@@ -303,7 +395,13 @@ export default {
       }
     }
   },
-  components: { Pagination }
+  components: { Pagination, SelectDep }
 };
 </script>
+
+<style lang="scss">
+.el-popper .el-scrollbar__wrap {
+  overflow-x: scroll;
+}
+</style>
 

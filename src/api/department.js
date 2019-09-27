@@ -26,9 +26,19 @@ export function editDepartments(data) {
  * 获取部门树
  * @param {*} id 部门ID
  */
-export function getDepartmentsTreeList(id) {
+export function getDepartmentsTreeList() {
     return request({
-        url: '/departments/getTreeList/' + id,
+        url: '/departments/getTreeList',
+        method: 'get'
+    })
+}
+/**
+ * 删除部门
+ * @param {*} id 部门ID
+ */
+export function deleteDepartments(id) {
+    return request({
+        url: '/departments/delete/' + id,
         method: 'get'
     })
 }
