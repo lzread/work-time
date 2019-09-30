@@ -3,13 +3,13 @@
 
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <div class="btn-wrap">
-        <button
+        <!-- <button
           class="create-flow-btn"
           @click="createFlow"
         >
           <i class="el-icon-plus"></i>
           <span></span>
-        </button>
+        </button> -->
       </div>
       <el-menu
         unique-opened
@@ -17,21 +17,20 @@
         :default-active="$route.path"
       >
 
-        <sidebar-item :items="routes"></sidebar-item>
+        <sidebar-item :items="permission_routes"></sidebar-item>
       </el-menu>
     </el-scrollbar>
 
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import SidebarItem from "./SidebarItem";
 
 export default {
   name: "SideBar",
   computed: {
-    routes() {
-      return this.$store.state.permission.routes;
-    }
+    ...mapGetters(["permission_routes"])
   },
   methods: {
     createFlow() {

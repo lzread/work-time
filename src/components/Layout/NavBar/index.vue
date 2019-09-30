@@ -1,6 +1,6 @@
 <template>
   <div id="NavBar">
-    <div class="brand">LOGO</div>
+    <div class="brand"></div>
     
     <el-breadcrumb separator="/">
       <el-breadcrumb-item

@@ -31,17 +31,6 @@
         ></el-tree>
       </div>
 
-      <div class="ft">
-        <el-button
-          size="mini"
-          @click="confirm"
-        >Confirm</el-button>
-        <el-button
-          size="mini"
-          @click="cancel"
-        >Cancel</el-button>
-      </div>
-
     </div>
 
   </el-dialog>
@@ -61,7 +50,8 @@ export default {
   computed: {
     ...mapGetters({
       visible: "department/dialogVisible",
-      current: "department/currentNode"
+      current: "department/currentNode",
+      parent: "department/currentParentNode"
     })
   },
   watch: {
@@ -73,14 +63,6 @@ export default {
     }
   },
   methods: {
-    confirm() {
-      this.$store.dispatch("department/setDialogVisible", false);
-      this.$store.dispatch(
-        "department/setCurrentNode",
-        this.$refs.tree.getCurrentNode()
-      );
-      this.$emit("callback", this.current);
-    },
     cancel() {
       this.$store.dispatch("department/setDialogVisible", false);
     },
@@ -89,14 +71,25 @@ export default {
         this.depList = response.data;
       });
       setTimeout(() => {
-        this.$refs.tree.setCurrentKey(this.current.id);
+        this.$refs.tree.setCurrentKey(this.parent.id);
       }, 100);
     },
     filterNode(value, data) {
       if (!value) return true;
       return data.name.indexOf(value) !== -1;
     },
-    depNodeClick(data) {}
+    depNodeClick(data) {
+      if (data.id == this.current.id) {
+        this.$message("部门不能移动到其本身或其子部门下");
+        return;
+      }
+      this.$store.dispatch("department/setDialogVisible", false);
+      this.$store.dispatch(
+        "department/setCurrentParentNode",
+        this.$refs.tree.getCurrentNode()
+      );
+      this.$emit("callback", data);
+    }
   }
 };
 </script>

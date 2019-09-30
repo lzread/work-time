@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css'
 import defaultSettings from '@/settings'
 import { getToken } from '@/utils/auth'
 
+
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
@@ -24,9 +25,10 @@ router.beforeEach((to, from, next) => {
       } else {
         store.dispatch('user/getInfo').then(res => {
           next()
-          const roles = [res.roles];
+          const roles = [res.jobId];
           store.dispatch('permission/generateRoutes', roles).then(accessRoutes => {
-            router.addRoutes(accessRoutes)  
+            //router.addRoutes(accessRoutes)
+            console.log(accessRoutes);
             next({ ...to, replace: true })
           })
         }).catch((error) => {

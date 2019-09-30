@@ -58,15 +58,13 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "130",
-        password: "123"
+        username: "admin",
+        password: "123456"
       }
     };
   },
   methods: {
     login() {
-      this.loginForm.password = md5(this.loginForm.password);
-      console.log(this.loginForm.password);
       this.$store
         .dispatch("user/login", this.loginForm)
         .then(() => {

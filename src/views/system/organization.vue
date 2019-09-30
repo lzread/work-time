@@ -29,6 +29,11 @@
         >添加员工</el-button>
         <el-button
           size="mini"
+          icon="el-icon-finished"
+          :disabled="empButtons.message"
+        >批量移动</el-button>
+        <el-button
+          size="mini"
           icon="el-icon-turn-off"
           :disabled="empButtons.freeze"
         >批量冻结</el-button>
@@ -169,7 +174,7 @@
         <el-form-item label="上级部门">
           <el-input
             style="width:calc(100% - 60px);"
-            v-model="depParentName"
+            v-model="depCurrentRow.name"
             readonly
           ></el-input>
           <el-button
@@ -198,6 +203,8 @@
 
     <select-dep @callback="depCallback"></select-dep>
 
+    
+
   </div>
 </template>
 
@@ -219,7 +226,7 @@ export default {
     return {
       depList: [],
       depRow: {},
-      depParentName: "",
+      depCurrentRow: {},
       empList: [],
       empListLoading: false,
       depSelectDialogVisible: false,
@@ -251,11 +258,6 @@ export default {
       }
     };
   },
-  computed: {
-    ...mapGetters({
-      current: "department/currentNode"
-    })
-  },
   created() {
     this.depTreeList();
   },
@@ -267,36 +269,37 @@ export default {
   computed: {},
   methods: {
     depVisible(type) {
-      this.depRow = {};
-      
+      this.depDialogs.dialogVisible = true;
+
+      const node = this.$refs.tree.getCurrentNode();
+
+      /*---------------用来判断编辑部门的时候不可以选择当前节点--------------------*/
+      this.$store.dispatch("department/setCurrentNode", node);
+      /*------------------------------------------------------------------------*/
+
+      this.depRow = deepClone(node);
+
       if (type == "create") {
+        this.depRow = {};
         this.depDialogs.dialogType = "create";
-        this.depDialogs.dialogVisible = true;
-        this.depRow.parentId = this.$refs.tree.getCurrentNode().id;
-
-        this.depParentName = this.$refs.tree.getCurrentNode().name;
-
+        this.depRow.parentId = node.id;
       } else {
         this.depDialogs.dialogType = "edit";
-        this.depDialogs.dialogVisible = true;
-        this.depRow = deepClone(this.$refs.tree.getCurrentNode());
-
-        //this.depParentName = this.$refs.tree.getCurrentNode().name;
-        
+        this.$refs.tree.setCurrentKey(this.depRow.parentId);
       }
+
+      this.depCurrentRow = this.$refs.tree.getCurrentNode();
     },
     depConfirm() {
       if (this.depDialogs.dialogType == "create") {
         createDepartments(this.depRow).then(response => {
           this.depDialogs.dialogVisible = false;
           this.depTreeList();
-          console.log(response);
         });
       } else {
         editDepartments(this.depRow).then(response => {
           this.depDialogs.dialogVisible = false;
           this.depTreeList();
-          console.log(response);
         });
       }
     },
@@ -338,10 +341,10 @@ export default {
     depSelect() {
       //打开弹出层
       this.$store.dispatch("department/setDialogVisible", true);
-      //传递当前选择节点
+      //传递上一级选择节点
       this.$store.dispatch(
-        "department/setCurrentNode",
-        this.$refs.tree.getCurrentNode()
+        "department/setCurrentParentNode",
+        this.depCurrentRow
       );
     },
     /**
@@ -349,16 +352,13 @@ export default {
      * @param {*} item 当前选择节点
      */
     depCallback(item) {
-      console.log(item);
-      this.$refs.tree.setCurrentKey(item.id);
-      if(this.depDialogs.dialogType == "create"){
-        this.depRow.parentId = item.id;
-        this.depParentName = item.name;
-      }else{
-        this.depRow.parentId = item.id;
-        this.depParentName = item.name;
-      }
+      this.depCurrentRow = item;
+      this.depRow.parentId = item.id;
 
+      if (this.depDialogs.dialogType == "create") {
+      } else {
+        //this.depRow.id = item.id;
+      }
     },
 
     filterNode(value, data) {

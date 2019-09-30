@@ -2,12 +2,14 @@
 
 const state = {
   dialogVisible: false,
-  currentNode: {},
+  currentNode: {},        //当前节点
+  currentParentNode: {},  //当前父级节点
 }
 
 const getters = {
   dialogVisible: state => state.dialogVisible,
   currentNode: state => state.currentNode,
+  currentParentNode: state => state.currentParentNode
 }
 
 const mutations = {
@@ -16,6 +18,9 @@ const mutations = {
   },
   SET_CURRENT_NODE: (state, currentNode) => {
     state.currentNode = currentNode
+  },
+  SET_CURRENT_PARENT_NODE: (state, currentParentNode) => {
+    state.currentParentNode = currentParentNode
   },
 }
 
@@ -27,6 +32,10 @@ const actions = {
 
   setCurrentNode({ commit }, currentNode) {
     commit('SET_CURRENT_NODE', currentNode)
+  },
+
+  setCurrentParentNode({ commit }, currentParentNode) {
+    commit('SET_CURRENT_PARENT_NODE', currentParentNode)
   },
 
 
