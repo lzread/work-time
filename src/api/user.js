@@ -12,13 +12,15 @@ export function login(data) {
   })
 }
 
+
+
 /**
  * 获取用户信息
  * @param {*} id 用户ID
  */
 export function getInfo(id) {
   return request({
-    url: '/user/getInfo/' + id,
+    url: `/user/getInfo/${id}`,
     method: 'get'
   })
 }
@@ -28,9 +30,9 @@ export function getInfo(id) {
  * @param {*} id 部门ID
  * @param {*} query 分页参数
  */
-export function getUsersList(id, query) {
+export function getUsers(id, query) {
   return request({
-    url: '/user/getList/' + id,
+    url: `/user/getUsers/${id}`,
     method: 'get',
     params: query
   })

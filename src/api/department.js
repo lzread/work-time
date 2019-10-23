@@ -38,7 +38,7 @@ export function getDepartmentsTreeList() {
  */
 export function deleteDepartments(id) {
     return request({
-        url: '/departments/delete/' + id,
+        url: `/departments/delete/${id}`,
         method: 'get'
     })
 }

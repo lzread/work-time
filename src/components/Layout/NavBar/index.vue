@@ -61,8 +61,8 @@ export default {
   created() {},
   computed: {
     ...mapGetters({
-      name: "user/name",
-      avatar: "user/avatar"
+      name: "name",
+      avatar: "avatar"
     })
   },
   methods: {

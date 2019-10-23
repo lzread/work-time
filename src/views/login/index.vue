@@ -41,8 +41,8 @@
 
         <button @click="login">{{ $t("Login.buttonText") }}</button>
 
-        <p><a href="#">MIT</a> license</p>
-        <p>Copyright &copy; 2019-2029 lzread </p>
+        <!-- <p><a href="#">MIT</a> license</p>
+        <p>Copyright &copy; 2019-2029 lzread </p> -->
 
       </div>
 
@@ -52,25 +52,43 @@
 </template>
 
 <script>
-import md5 from "js-md5";
 export default {
   name: "Login",
   data() {
     return {
+      redirect: undefined,
+      otherQuery: {},
       loginForm: {
         username: "admin",
         password: "123456"
       }
     };
   },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query;
+        if (query) {
+          this.redirect = query.redirect;
+          this.otherQuery = this.getOtherQuery(query);
+        }
+      },
+      immediate: true
+    }
+  },
   methods: {
     login() {
-      this.$store
-        .dispatch("user/login", this.loginForm)
-        .then(() => {
-          this.$router.push({ path: "/" });
-        })
-        .catch(() => {});
+      this.$store.dispatch("user/login", this.loginForm).then(() => {
+        this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+      });
+    },
+    getOtherQuery(query) {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== "redirect") {
+          acc[cur] = query[cur];
+        }
+        return acc;
+      }, {});
     }
   }
 };

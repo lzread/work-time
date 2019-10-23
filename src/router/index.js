@@ -44,126 +44,139 @@ export const asyncRoutes = [
     component: Layout,
     name: 'flow',
     meta: {
+      roles: ['admin', 'editor'],
       title: 'flow',
-      roles: [1],
     },
-    // children: [
-    //   {
-    //     path: '/flow/list',
-    //     name: 'flowList',
-    //     component: () => import('@/views/flow/list'),
-    //     meta: {
-    //       title: 'list',
-    //     }
-    //   },
-    //   {
-    //     path: '/flow/settings/index',
-    //     name: 'flowSettings',
-    //     component: () => import('@/views/flow/settings/index'),
-    //     meta: {
-          
-    //       title: 'flow settings',
-    //     },
-    //     children: [
-    //       {
-    //         path: '/flow/settings/category',
-    //         name: 'flowCategory',
-    //         component: () => import('@/views/flow/settings/category'),
-    //         meta: {
-    //           title: 'flow category',
-    //         },
-    //       },
-    //       {
-    //         path: '/flow/settings/template',
-    //         name: 'flowTemplate',
-    //         component: () => import('@/views/flow/settings/template'),
-    //         meta: {
-    //           title: 'flow template',
-    //         }
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     path: '/flow/forms',
-    //     name: 'forms',
-    //     component: () => import('@/views/flow/forms/index'),
-    //     meta: {
-    //       title: 'forms',
-    //     },
-    //     children: [
-    //       {
-    //         path: '/flow/forms/create',
-    //         name: 'formCreate',
-    //         component: () => import('@/views/flow/forms/create'),
-    //         hidden: true,
-    //         meta: {
-    //           title: 'form create',
-    //         },
-    //       },
-    //       {
-    //         path: '/flow/forms/list',
-    //         name: 'formList',
-    //         component: () => import('@/views/flow/forms/list'),
-    //         meta: {
-    //           title: 'list',
-    //         },
-    //       },
-    //       {
-    //         path: '/flow/forms/store',
-    //         name: 'formStore',
-    //         component: () => import('@/views/flow/forms/store'),
-    //         meta: {
-    //           title: 'store',
-    //         },
-    //       },
-    //     ]
-    //   },
-    //   {
-    //     path: '/flow/store',
-    //     name: 'flowStore',
-    //     component: () => import('@/views/flow/store'),
-    //     meta: {
-    //       title: 'flow store',
-    //     }
-    //   },
-    // ]
+    children: [
+      {
+        path: '/flow/list',
+        name: 'flowList',
+        component: () => import('@/views/flow/list'),
+        meta: {
+          roles: ['admin', 'editor'],
+          title: 'list',
+        }
+      },
+      {
+        path: '/flow/settings/index',
+        name: 'flowSettings',
+        component: () => import('@/views/flow/settings/index'),
+        meta: {
+          roles: ['admin', 'editor'],
+          title: 'flow settings',
+        },
+        children: [
+          {
+            path: '/flow/settings/category',
+            name: 'flowCategory',
+            component: () => import('@/views/flow/settings/category'),
+            meta: {
+              roles: ['editor'],
+              title: 'flow category',
+            },
+          },
+          {
+            path: '/flow/settings/template',
+            name: 'flowTemplate',
+            component: () => import('@/views/flow/settings/template'),
+            meta: {
+              roles: ['admin'],
+              title: 'flow template',
+            }
+          },
+        ],
+      },
+      {
+        path: '/flow/forms',
+        name: 'forms',
+        component: () => import('@/views/flow/forms/index'),
+        meta: {
+          roles: [],
+          title: 'forms',
+
+        },
+        children: [
+          {
+            path: '/flow/forms/create',
+            name: 'formCreate',
+            component: () => import('@/views/flow/forms/create'),
+            hidden: true,
+            meta: {
+              roles: [],
+              title: 'form create',
+            },
+          },
+          {
+            path: '/flow/forms/list',
+            name: 'formList',
+            component: () => import('@/views/flow/forms/list'),
+            meta: {
+              roles: [],
+              title: 'list',
+            },
+          },
+          {
+            path: '/flow/forms/store',
+            name: 'formStore',
+            component: () => import('@/views/flow/forms/store'),
+            meta: {
+              roles: [],
+              title: 'store',
+            },
+          },
+        ]
+      },
+      {
+        path: '/flow/store',
+        name: 'flowStore',
+        component: () => import('@/views/flow/store'),
+        meta: {
+          roles: [],
+          title: 'flow store',
+        }
+      },
+    ]
   },
 
-  // {
-  //   path: '/system',
-  //   component: Layout,
-  //   name: 'system',
-  //   meta: {
-  //     title: 'system',
-  //   },
-  //   children: [
-  //     {
-  //       path: '/system/companyInfo',
-  //       name: 'companyInfo',
-  //       component: () => import('@/views/system/companyInfo'),
-  //       meta: {
-  //         title: 'company info',
-  //       }
-  //     },
-  //     {
-  //       path: '/system/organization',
-  //       name: 'organization',
-  //       component: () => import('@/views/system/organization'),
-  //       meta: {
-  //         title: 'organization',
-  //       }
-  //     },
-  //     {
-  //       path: '/system/permission',
-  //       name: 'permission',
-  //       component: () => import('@/views/system/permission'),
-  //       meta: {
-  //         title: 'permission',
-  //       },
-  //     },
+  {
+    path: '/system',
+    component: Layout,
+    name: 'system',
+    meta: {
+      roles: [],
+      title: 'system',
+    },
+    children: [
+      {
+        path: '/system/companyInfo',
+        name: 'companyInfo',
+        component: () => import('@/views/system/companyInfo'),
+        meta: {
+          roles: [],
+          title: 'company info',
+        }
+      },
+      {
+        path: '/system/organization',
+        name: 'organization',
+        component: () => import('@/views/system/organization'),
+        meta: {
+          roles: [],
+          title: 'organization',
+        }
+      },
+      {
+        path: '/system/permission',
+        name: 'permission',
+        component: () => import('@/views/system/permission'),
+        meta: {
+          roles: [],
+          title: 'permission',
+        },
+      },
 
-  //   ]
-  // },
+    ]
+  },
 ]
 
 const createRouter = () => new Router({
@@ -180,4 +193,3 @@ export function resetRouter() {
 }
 
 export default router
-
