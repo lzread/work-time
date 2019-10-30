@@ -59,7 +59,7 @@ export default {
       redirect: undefined,
       otherQuery: {},
       loginForm: {
-        username: "admin",
+        username: "s1",
         password: "123456"
       }
     };
@@ -79,7 +79,10 @@ export default {
   methods: {
     login() {
       this.$store.dispatch("user/login", this.loginForm).then(() => {
-        this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+        this.$router.push({
+          path: this.redirect || "/",
+          query: this.otherQuery
+        });
       });
     },
     getOtherQuery(query) {

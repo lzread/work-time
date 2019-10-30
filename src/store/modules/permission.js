@@ -1,5 +1,6 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 
+
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -38,9 +39,10 @@ function makePermissionRouters(serverRouter, clientAsyncRoutes) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
+  console.log(roles);
   routes.forEach(route => {
     const tmp = { ...route }
+
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
         tmp.children = filterAsyncRoutes(tmp.children, roles)
@@ -63,33 +65,11 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }, { roles, serverRouter }) {
     return new Promise(resolve => {
       let accessedRoutes
 
-      const serverRouter = [{
-        name: 'system',
-        roles: ['admin', 'lzread', 'editor'],
-      },
-      {
-        name: 'companyInfo',
-        roles: ['admin', 'editor'],
-      },
-      {
-        name: 'organization',
-        roles: ['admin', 'lzread'],
-      },
-      {
-        name: 'permission',
-        roles: ['admin'],
-      }]
-
-
-
-
       const routes = makePermissionRouters(serverRouter, asyncRoutes);
-
-      console.log(roles);
 
       if (roles.includes('admin')) {
         accessedRoutes = routes || []

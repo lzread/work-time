@@ -3,38 +3,20 @@
 
     <pre>{{menus}}</pre>
 
-    ---------------------------------------
-
-    <pre>{{roles}}</pre>
+  
 
   </div>
 </template>
 
 <script>
-import { getRoles, addRole } from "@/api/role";
+
+import { getRoutes, getRoles, addRole } from "@/api/role";
 export default {
   name: "AuthManage",
   data() {
     return {
       roles: [],
-      menus: [
-        {
-          id: 1,
-          name: "system"
-        },
-        {
-          id: 2,
-          name: "companyInfo"
-        },
-        {
-          id: 3,
-          name: "organization"
-        },
-        {
-          id: 4,
-          name: "permission"
-        }
-      ],
+      menus: [],
       role: {
         token: "admin",
         name: "超级管理员",
@@ -52,13 +34,13 @@ export default {
     };
   },
   created() {
-    this.getRoles();
+    this.getRoutes();
   },
   computed: {},
   methods: {
-    getRoles() {
-      getRoles().then(response => {
-        this.roles = response.data;
+    getRoutes() {
+      getRoutes().then(response => {
+        this.menus = response.data;
       });
     },
     addRole() {

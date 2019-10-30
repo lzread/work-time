@@ -1,4 +1,5 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, getInfo } from '@/api/user'
+import { getServerRouter } from '@/api/role'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -7,7 +8,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  serverRouter: []
 }
 
 const mutations = {
@@ -25,16 +27,18 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
-  }
+  },
+  SET_SERVER_ROUTER: (state, serverRouter) => {
+    state.serverRouter = serverRouter
+  },
 }
 
 const actions = {
   // 用户登录
   login({ commit }, userInfo) {
     const { username, password } = userInfo
-
     return new Promise((resolve, reject) => {
-      login({ UserName: username.trim(), UserPass: password }).then(response => {
+      login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.id)
         setToken(data.id)
@@ -62,10 +66,29 @@ const actions = {
           reject('角色必须是非空数组!')
         }
 
+
+
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // 获取菜单
+  getServerRouter({ commit }) {
+
+    return new Promise((resolve, reject) => {
+
+      getServerRouter().then(response => {
+        const { data } = response
+        for (let x in data) {
+          data[x].roles = data[x].roles.split(",");
+        }
+        commit('SET_SERVER_ROUTER', data);
         resolve(data)
       }).catch(error => {
         reject(error)

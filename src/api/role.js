@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getRoutes() {
+export function getServerRouter() {
   return request({
-    url: '/route/getRoutes',
+    url: '/roles_menus/getMenus',
     method: 'get'
   })
 }
