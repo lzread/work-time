@@ -26,3 +26,6 @@ export function getInfo(id) {
 }
 
 
+
+
+

@@ -1,9 +1,10 @@
 import { login, getInfo } from '@/api/user'
-import { getServerRouter } from '@/api/role'
+import { getMenus } from '@/api/menu'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
+  id: '',
   token: getToken(),
   name: '',
   avatar: '',
@@ -13,6 +14,9 @@ const state = {
 }
 
 const mutations = {
+  SET_ID: (state, id) => {
+    state.id = id
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -40,8 +44,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.id)
-        setToken(data.id)
+        commit('SET_ID', data.id)
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -53,7 +58,7 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
 
-      getInfo(state.token).then(response => {
+      getInfo(state.id).then(response => {
         const { data } = response
 
         if (!data) {
@@ -79,11 +84,11 @@ const actions = {
     })
   },
   // 获取菜单
-  getServerRouter({ commit }) {
+  getMenus({ commit }) {
 
     return new Promise((resolve, reject) => {
 
-      getServerRouter().then(response => {
+      getMenus().then(response => {
         const { data } = response
         for (let x in data) {
           data[x].roles = data[x].roles.split(",");
