@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import defaultSettings from '@/settings'
-import { getToken } from '@/utils/auth'
+import Cookies from 'js-cookie'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -18,7 +18,9 @@ router.beforeEach(async(to, from, next) => {
   document.title = to.meta.title ? to.meta.title + ' ' + defaultSettings.title : defaultSettings.title
 
   // determine whether the user has logged in
-  const hasToken = getToken()
+  const hasToken = Cookies.get('token')
+
+  console.log(hasToken);
 
   if (hasToken) {
     if (to.path === '/login') {
@@ -36,9 +38,7 @@ router.beforeEach(async(to, from, next) => {
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getInfo')
 
-          const serverRouter =  await store.dispatch('user/getMenus')
-
-          console.log(serverRouter);
+          const serverRouter =  []; //await store.dispatch('user/getMenus')
 
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', {roles, serverRouter})

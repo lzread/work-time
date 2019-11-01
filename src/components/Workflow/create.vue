@@ -45,7 +45,7 @@ export default {
   name: "CreateFlow",
   computed: {
     ...mapGetters({
-      visible: "flow/dialogVisible"
+      visible: "workflow/dialogVisible"
     })
   },
   methods: {
@@ -53,7 +53,7 @@ export default {
       
     },
     cancel() {
-      this.$store.dispatch("flow/setDialogVisible", false);
+      this.$store.dispatch("workflow/setDialogVisible", false);
     }
   }
 };

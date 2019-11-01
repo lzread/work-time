@@ -1,11 +1,11 @@
 import { login, getInfo } from '@/api/user'
 import { getMenus } from '@/api/menu'
-import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import Cookies from 'js-cookie'
 
 const state = {
-  id: '',
-  token: getToken(),
+  id: Cookies.get('id'),
+  token: Cookies.get('token'),
   name: '',
   avatar: '',
   introduction: '',
@@ -46,7 +46,10 @@ const actions = {
         const { data } = response
         commit('SET_ID', data.id)
         commit('SET_TOKEN', data.token)
-        setToken(data.token)
+
+        Cookies.set('token', data.token)
+        Cookies.set('id', data.id)
+
         resolve()
       }).catch(error => {
         reject(error)
@@ -68,9 +71,8 @@ const actions = {
         const { roles, name, avatar, introduction } = data
 
         if (!roles || roles.length <= 0) {
-          reject('角色必须是非空数组!')
+          reject('您还未必分配角色，请联系管理员!')
         }
-
 
 
         commit('SET_ROLES', roles)
@@ -85,9 +87,7 @@ const actions = {
   },
   // 获取菜单
   getMenus({ commit }) {
-
     return new Promise((resolve, reject) => {
-
       getMenus().then(response => {
         const { data } = response
         for (let x in data) {
@@ -106,18 +106,20 @@ const actions = {
     return new Promise((resolve) => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken()
+      Cookies.remove('token')
+      Cookies.remove('id')
       resetRouter()
       resolve()
     })
   },
 
-  // remove token
+  // 删除 token
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken()
+      Cookies.remove('token')
+      Cookies.remove('id')
       resolve()
     })
   },
@@ -128,7 +130,7 @@ const actions = {
       const token = role + '-token'
 
       commit('SET_TOKEN', token)
-      setToken(token)
+      Cookies.set('token', token)
 
       const { roles } = await dispatch('getInfo')
 

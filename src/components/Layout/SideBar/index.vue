@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     createFlow() {
-      this.$store.dispatch("flow/setDialogVisible", true);
+      this.$store.dispatch("workflow/setDialogVisible", true);
     }
   },
   components: { SidebarItem }

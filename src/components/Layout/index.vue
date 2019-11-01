@@ -32,7 +32,7 @@ import SideBar from "./SideBar";
 import AppMain from "./AppMain";
 import TagsView from "./TagsView";
 
-import CreateFlow from "@/components/Flow/create";
+import CreateFlow from "@/components/Workflow/create";
 
 export default {
   name: "Layout",

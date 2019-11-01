@@ -115,7 +115,7 @@ export const asyncRoutes = [
             name: 'formList',
             component: () => import('@/views/workflow/forms/list'),
             meta: {
-              title: 'list',
+              title: 'form list',
             },
           },
           {

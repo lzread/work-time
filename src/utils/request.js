@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import Cookies from 'js-cookie'
 
 // create an axios instance
 const service = axios.create({
@@ -19,7 +19,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['authorization'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['authorization'] = 'Bearer ' + getToken()
+      config.headers['authorization'] = 'Bearer ' + Cookies.get('token')
     }
     return config
   },
