@@ -60,9 +60,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   font-size: 12px;
 }
 
-.el-input__inner {
+.el-input__inner,.el-textarea__inner {
   padding: 0 5px;
 }
+
 
 .el-menu {
   border: 0;

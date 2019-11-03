@@ -11,16 +11,20 @@
     </div>
 
     <el-dialog
+      width="400px"
       :visible.sync="dialogRole"
       :title="dialogRoleType==='UPDATE'?'编辑角色':'新建角色'"
     >
       <el-form
+        ref="roleForm"
         :model="role_data"
         label-width="80px"
         label-position="left"
         size="mini"
       >
-        <el-form-item label="角色名称">
+        <el-form-item
+          label="角色名称"
+        >
           <el-input
             v-model="role_data.role_name"
             placeholder="请输入角色名称"
@@ -33,6 +37,12 @@
             type="textarea"
             placeholder="请输入角色描述"
           />
+        </el-form-item>
+        <el-form-item label="角色状态">
+          <el-radio-group v-model="role_data.status">
+            <el-radio :label="0">正常</el-radio>
+            <el-radio :label="1">停用</el-radio>
+          </el-radio-group>
         </el-form-item>
 
         <el-form-item>
@@ -52,6 +62,7 @@
     </el-dialog>
 
     <el-dialog
+      width="400px"
       :visible.sync="dialogMenu"
       title="权限菜单"
     >
@@ -70,6 +81,7 @@
       <div slot="footer">
         <el-button
           size="mini"
+          type="danger"
           @click="dialogMenu = false"
         >取消</el-button>
         <el-button
@@ -84,29 +96,67 @@
     <div class="main">
 
       <template>
-        <el-table :data="role_list">
+        <el-table
+          :data="role_list"
+          stripe
+        >
           <el-table-column
             prop="role_name"
             label="角色名称"
           >
           </el-table-column>
+          <el-table-column label="状态">
+            <template slot-scope="scope">
+              <el-tag
+                v-if="scope.row.status == -1"
+                size="mini"
+              >系统</el-tag>
+              <el-tag
+                v-else-if="scope.row.status == 0"
+                size="mini"
+              >正常</el-tag>
+              <el-tag
+                v-else-if="scope.row.status == 1"
+                size="mini"
+                type="info"
+              >停用</el-tag>
+              <el-tag
+                v-else
+                size="mini"
+              >其他</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="role_desc"
-            label="角色描述"
+            label="描述"
           >
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
                 @click="updateRoleHandle(scope.row)"
-                type="text"
+                v-if="scope.row.status != -1"
+                type="primary"
                 size="mini"
-              >编辑角色</el-button>
+              >编辑</el-button>
               <el-button
                 @click="roleMenuHandle(scope.row.id)"
-                type="text"
+                v-if="scope.row.status != -1"
+                type="primary"
                 size="mini"
-              >权限菜单</el-button>
+              >菜单</el-button>
+              <el-button
+                @click="updateRoleHandle(scope.row)"
+                v-if="scope.row.status != -1"
+                size="mini"
+                type="primary"
+              >权限</el-button>
+              <el-button
+                @click="deleteRoleHandle(scope.$index, scope.row)"
+                v-if="scope.row.status != -1"
+                type="danger"
+                size="mini"
+              >删除</el-button>
 
             </template>
           </el-table-column>
@@ -124,7 +174,7 @@
  * step1 新增角色
  * step2 编辑菜单&编辑权限
  */
-import { getRoles, addRole, updateRole } from "@/api/role";
+import { getRoles, addRole, updateRole, deleteRole } from "@/api/role";
 import { getRoleIdByMenuId, addRoleMenu } from "@/api/role_menu";
 import { getMenus } from "@/api/menu";
 export default {
@@ -189,18 +239,28 @@ export default {
       function nodes() {}
     },
 
-    //新建角色弹出层
+    //新建角色按钮
     addRoleHandle() {
       this.role_data = {};
       this.dialogRole = true;
       this.dialogRoleType = "ADD";
+      
     },
 
-    //编辑角色弹出层
+    //编辑角色按钮
     updateRoleHandle(data) {
       this.role_data = data;
       this.dialogRole = true;
       this.dialogRoleType = "UPDATE";
+    },
+
+    //删除角色按钮
+    deleteRoleHandle(index, data) {
+      console.log(index);
+      deleteRole(data.id).then(response => {
+        this.role_list.splice(index, 1);
+        this.$message(response.msg);
+      });
     },
 
     //提交 新建&编辑角色
@@ -209,6 +269,7 @@ export default {
       //TODO
 
       if (this.dialogRoleType == "ADD") {
+        this.$refs['roleForm'].resetFields();
         //新建角色
         addRole(this.role_data).then(response => {
           //新建完成，更新角色列表
@@ -251,12 +312,13 @@ export default {
       menu_nodes.forEach(item => {
         nodes.push({ role_id: this.role_id, menu_id: item });
       });
-
-      console.log(nodes);
-
       addRoleMenu(this.role_id, nodes).then(response => {
-        console.log(response);
+        this.$message(response.msg);
+        this.dialogMenu = false;
       });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   },
   components: {}

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
+import elementUIVerify from 'element-ui-verify'
 
 import './styles/index.scss';
 
@@ -25,6 +26,7 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+Vue.use(elementUIVerify)
 Vue.use(router);
 Vue.use(VueI18n);
 
