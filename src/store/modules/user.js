@@ -10,7 +10,8 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  serverRouter: []
+  serverRouter: [],
+  powers: []
 }
 
 const mutations = {
@@ -34,6 +35,9 @@ const mutations = {
   },
   SET_SERVER_ROUTER: (state, serverRouter) => {
     state.serverRouter = serverRouter
+  },
+  SET_POWERS: (state, powers) => {
+    state.powers = powers
   },
 }
 
@@ -68,7 +72,7 @@ const actions = {
           reject('验证失败，请重新登录。')
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { roles, powers, name, avatar, introduction } = data
 
         if (!roles || roles.length <= 0) {
           reject('您还未必分配角色，请联系管理员!')
@@ -76,6 +80,7 @@ const actions = {
 
 
         commit('SET_ROLES', roles)
+        commit('SET_POWERS', powers)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
