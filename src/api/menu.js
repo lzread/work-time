@@ -9,6 +9,13 @@ export function getMenus() {
         method: 'get'
     })
 }
+export function getMenusByRoleId(id) {
+    return request({
+        url: `/menu/getMenusByRoleId/${id}`,
+        method: 'get'
+    })
+}
+
 /**
  * 新建菜单
  * @param {*} data    菜单模型
