@@ -16,6 +16,13 @@ export function getMenusByRoleId(id) {
     })
 }
 
+export function getMenuPowersByRoleId(id) {
+    return request({
+        url: `/menu/getMenuPowersByRoleId/${id}`,
+        method: 'get'
+    })
+}
+
 /**
  * 新建菜单
  * @param {*} data    菜单模型

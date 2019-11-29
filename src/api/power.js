@@ -20,6 +20,14 @@ export function addPower(data) {
         data
     })
 }
+
+export function addRolePowerBatch(id, data) {
+    return request({
+        url: `/role_power/addRolePowerBatch/${id}`,
+        method: 'post',
+        data
+    })
+}
 /**
  * 更新权限
  * @param {*} data    权限模型
