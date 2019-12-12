@@ -1,6 +1,7 @@
 <template>
   <div id="home">
 
+
     <div class="menu-cells">
 
       <el-table
@@ -10,13 +11,13 @@
         default-expand-all
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
-        <!-- <el-table-column
+        <el-table-column
           prop="title"
           label="菜单"
         >
-        </el-table-column> -->
+        </el-table-column>
 
-        <!-- <el-table-column label="权限">
+        <el-table-column label="权限">
           <template slot-scope="scope">
             <span
               v-for="(item, index) in scope.row.powers_code"
@@ -26,14 +27,13 @@
             </span>
 
           </template>
-        </el-table-column> -->
+        </el-table-column>
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              size="text"
-              @click="addPowerHandle(scope.row)"
-            >编辑</el-button>
+            <div v-if="scope.row.powers_default.length != 0">
+              <el-button @click="editPowerHandle(scope.row)"></el-button>
+            </div>
           </template>
         </el-table-column>
 
@@ -68,6 +68,16 @@
       :visible.sync="dialogPower"
       title="权限设置"
     >
+      <el-checkbox-group
+        v-model="powers_code"
+        size="mini"
+      >
+        <el-checkbox-button
+          v-for="(item, index) in powers_default"
+          :key="index"
+          :label="item.power_code"
+        >{{item.power_name}}{{item.id}}</el-checkbox-button>
+      </el-checkbox-group>
 
       <div slot="footer">
         <el-button
@@ -78,7 +88,7 @@
         <el-button
           size="mini"
           type="primary"
-          @click="addPower"
+          @click="submitPower"
         >提交</el-button>
       </div>
 
@@ -90,20 +100,22 @@
 <script>
 import { getMenusByRoleId, getMenuPowersByRoleId } from "@/api/menu";
 import { getPowers, addRolePowerBatch } from "@/api/power";
+import { deepClone } from "@/utils";
 export default {
   name: "home",
   data() {
     return {
       dialogPower: false,
+      role_id: 3,
       powerMenuTreeList: [],
       powerAllList: [],
-      powerList: []
+      powerList: [],
+      powers_default: [],
+      powers_code: []
     };
   },
   created() {
     this.getPowers();
-    this.getCheckedPowers("3");
-    this.getMenus("3");
   },
   computed: {},
   methods: {
@@ -114,12 +126,13 @@ export default {
     async getPowers() {
       const { data } = await getPowers();
       this.powerList = data;
+      this.getCheckedPowers(this.role_id);
+      this.getMenus(this.role_id);
     },
     async getMenus(role_id) {
       const { data } = await getMenusByRoleId(role_id);
       let allPower = this.powerList;
       let allPowerChecked = this.powerAllList;
-
       data.forEach(item => {
         let powers = [];
         let powers_code = [];
@@ -139,18 +152,31 @@ export default {
 
       this.powerMenuTreeList = this.treeList(data);
     },
-    addPowerHandle(row) {
-			
-			row.powers_code.forEach(item => {
-				row.powers_default.forEach(i => {
-					if(i.power_code == item){
-						console.log(i)
-					}
-				});
-
-			});
+    editPowerHandle(row) {
+      this.dialogPower = true;
+      this.powers_default = deepClone(row.powers_default);
+      this.powers_code = deepClone(row.powers_code);
     },
-    addPower() {},
+    async submitPower() {
+      let data = [];
+      this.powers_default.forEach(item => {
+        this.powers_code.forEach(i => {
+          if (i == item.power_code) {
+            data.push({
+              id: item.id
+            });
+          }
+        });
+      });
+
+      try {
+        await addRolePowerBatch(3, data);
+        this.getPowers();
+        this.dialogPower = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async submit() {},
 
     treeList(data) {
