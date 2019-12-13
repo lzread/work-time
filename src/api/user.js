@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 /**
  * 登录
- * @param {*} data 登录信息
+ * @param {Object} data 登录信息
  */
 export function login(data) {
   return request({
@@ -12,16 +12,26 @@ export function login(data) {
   })
 }
 
-
-
 /**
  * 获取用户信息
- * @param {*} id 用户ID
+ * @param {Number} id 用户ID
  */
 export function getInfo(id) {
   return request({
     url: `/user/getInfo/${id}`,
     method: 'get'
+  })
+}
+
+/**
+ * 增加用户角色关联
+ * @param {Object} data 
+ */
+export function addUserRole(data) {
+  return request({
+    url: '/user/addUserRole',
+    method: 'post',
+    data
   })
 }
 

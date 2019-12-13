@@ -1,52 +1,36 @@
 import request from '@/utils/request'
 
 /**
- * 查询权限列表
+ * 获取当前菜单节点权限列表
+ * @param {Number} menu_id 菜单ID
  */
-export function getPowers() {
+export function getPowers(menu_id) {
     return request({
-        url: '/power/getPowers',
+        url: `/power/getPowers/${menu_id}`,
         method: 'get'
     })
 }
 /**
- * 新建权限
- * @param {*} data    权限模型
+ * 获取当前菜单节点已分配的权限列表
+ * @param {Number} role_id 角色ID
+ * @param {Number} menu_id 菜单ID
  */
-export function addPower(data) {
+export function getAssignPowers(data) {
     return request({
-        url: '/power/addPower',
-        method: 'post',
-        data
-    })
-}
-
-export function addRolePowerBatch(id, data) {
-    return request({
-        url: `/role_power/addRolePowerBatch/${id}`,
-        method: 'post',
-        data
+        url: '/power/getAssignPowers',
+        method: 'get',
+        params: data
     })
 }
 /**
- * 更新权限
- * @param {*} data    权限模型
+ * 增加角色和权限关联
+ * @param {Number} menu_id 菜单ID
+ * @param {Object} data 
  */
-export function updatePower(data) {
+export function addRolePower(menu_id, data) {
     return request({
-        url: '/power/updatePower',
+        url: `/role_power/addRolePower/${menu_id}`,
         method: 'post',
         data
     })
 }
-/**
- * 删除权限
- * @param {*} id    权限ID
- */
-export function deletePower(id) {
-    return request({
-        url: `/power/deletePower/${id}`,
-        method: 'get'
-    })
-}
-

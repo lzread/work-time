@@ -1,58 +1,20 @@
 import request from '@/utils/request'
-
 /**
- * 查询菜单列表
+ * 获取角色菜单
+ * @param {Number} user_id 用户ID
  */
-export function getMenus() {
+export function getMenus(user_id) {
     return request({
-        url: '/menu/getMenus',
+        url: `/menu/getMenus/${user_id}`,
         method: 'get'
     })
 }
-export function getMenusByRoleId(id) {
+/**
+ * 获取所有菜单
+ */
+export function getAllMenus() {
     return request({
-        url: `/menu/getMenusByRoleId/${id}`,
+        url: '/menu/getAllMenus',
         method: 'get'
     })
 }
-
-export function getMenuPowersByRoleId(id) {
-    return request({
-        url: `/menu/getMenuPowersByRoleId/${id}`,
-        method: 'get'
-    })
-}
-
-/**
- * 新建菜单
- * @param {*} data    菜单模型
- */
-export function addMenu(data) {
-    return request({
-        url: '/menu/addMenu',
-        method: 'post',
-        data
-    })
-}
-/**
- * 更新菜单
- * @param {*} data    菜单模型
- */
-export function updateMenu(data) {
-    return request({
-        url: '/menu/updateMenu',
-        method: 'post',
-        data
-    })
-}
-/**
- * 删除菜单
- * @param {*} id    菜单ID
- */
-export function deleteMenu(id) {
-    return request({
-        url: `/menu/deleteMenu/${id}`,
-        method: 'get'
-    })
-}
-

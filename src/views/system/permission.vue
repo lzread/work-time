@@ -169,159 +169,159 @@
 </template>
 
 <script>
-/**
- * #角色&权限&菜单 管理页面#
- * step1 新增角色
- * step2 编辑菜单&编辑权限
- */
-import { getRoles, addRole, updateRole, deleteRole } from "@/api/role";
-import { getRoleIdByMenuId, addRoleMenu } from "@/api/role_menu";
-import { getMenus } from "@/api/menu";
-export default {
-  name: "Permission",
-  data() {
-    return {
-      role_list: [],
-      role_data: {},
-      role_menu_data: [],
+// /**
+//  * #角色&权限&菜单 管理页面#
+//  * step1 新增角色
+//  * step2 编辑菜单&编辑权限
+//  */
+// import { getRoles, addRole, updateRole, deleteRole } from "@/api/role";
+// import { getRoleIdByMenuId, addRoleMenu } from "@/api/role_menu";
+// import { getMenus } from "@/api/menu";
+// export default {
+//   name: "Permission",
+//   data() {
+//     return {
+//       role_list: [],
+//       role_data: {},
+//       role_menu_data: [],
 
-      menu_list: [],
+//       menu_list: [],
 
-      dialogRole: false,
-      dialogRoleType: "ADD",
-      dialogMenu: false,
+//       dialogRole: false,
+//       dialogRoleType: "ADD",
+//       dialogMenu: false,
 
-      role_id: "",
+//       role_id: "",
 
-      defaultProps: {
-        children: "children",
-        label: "title"
-      }
-    };
-  },
-  created() {
-    this.getRoles();
-  },
-  computed: {},
-  methods: {
-    //查询角色列表
-    getRoles() {
-      getRoles().then(response => {
-        this.role_list = response.data;
-      });
-    },
+//       defaultProps: {
+//         children: "children",
+//         label: "title"
+//       }
+//     };
+//   },
+//   created() {
+//     this.getRoles();
+//   },
+//   computed: {},
+//   methods: {
+//     //查询角色列表
+//     getRoles() {
+//       getRoles().then(response => {
+//         this.role_list = response.data;
+//       });
+//     },
 
-    getMenus() {
-      getMenus().then(response => {
-        //递归生成Tree
-        this.menu_list = tree(response.data);
-        function tree(data) {
-          let map = {};
-          let obj = [];
-          data.forEach(item => {
-            map[item.id] = item;
-          });
-          data.forEach(item => {
-            let parent = map[item.parent_id];
-            if (parent) {
-              if (!Array.isArray(parent.children)) {
-                parent.children = [];
-              }
-              parent.children.push(item);
-            } else {
-              obj.push(item);
-            }
-          });
-          return obj;
-        }
-      });
+//     getMenus() {
+//       getMenus().then(response => {
+//         //递归生成Tree
+//         this.menu_list = tree(response.data);
+//         function tree(data) {
+//           let map = {};
+//           let obj = [];
+//           data.forEach(item => {
+//             map[item.id] = item;
+//           });
+//           data.forEach(item => {
+//             let parent = map[item.parent_id];
+//             if (parent) {
+//               if (!Array.isArray(parent.children)) {
+//                 parent.children = [];
+//               }
+//               parent.children.push(item);
+//             } else {
+//               obj.push(item);
+//             }
+//           });
+//           return obj;
+//         }
+//       });
 
-      function nodes() {}
-    },
+//       function nodes() {}
+//     },
 
-    //新建角色按钮
-    addRoleHandle() {
-      this.role_data = {};
-      this.dialogRole = true;
-      this.dialogRoleType = "ADD";
+//     //新建角色按钮
+//     addRoleHandle() {
+//       this.role_data = {};
+//       this.dialogRole = true;
+//       this.dialogRoleType = "ADD";
       
-    },
+//     },
 
-    //编辑角色按钮
-    updateRoleHandle(data) {
-      this.role_data = data;
-      this.dialogRole = true;
-      this.dialogRoleType = "UPDATE";
-    },
+//     //编辑角色按钮
+//     updateRoleHandle(data) {
+//       this.role_data = data;
+//       this.dialogRole = true;
+//       this.dialogRoleType = "UPDATE";
+//     },
 
-    //删除角色按钮
-    deleteRoleHandle(index, data) {
-      console.log(index);
-      deleteRole(data.id).then(response => {
-        this.role_list.splice(index, 1);
-        this.$message(response.msg);
-      });
-    },
+//     //删除角色按钮
+//     deleteRoleHandle(index, data) {
+//       console.log(index);
+//       deleteRole(data.id).then(response => {
+//         this.role_list.splice(index, 1);
+//         this.$message(response.msg);
+//       });
+//     },
 
-    //提交 新建&编辑角色
-    confirmRole() {
-      //表单校验
-      //TODO
+//     //提交 新建&编辑角色
+//     confirmRole() {
+//       //表单校验
+//       //TODO
 
-      if (this.dialogRoleType == "ADD") {
-        this.$refs['roleForm'].resetFields();
-        //新建角色
-        addRole(this.role_data).then(response => {
-          //新建完成，更新角色列表
-          this.role_list.push(response.data);
-          this.$message(response.msg);
-          this.dialogRole = false;
-        });
-      } else {
-        //编辑角色
-        updateRole(this.role_data).then(response => {
-          this.$message(response.msg);
-          this.dialogRole = false;
-        });
-      }
-    },
-    //根据角色ID查询对应选中的菜单节点
-    roleMenuHandle(role_id) {
-      this.role_id = role_id;
-      this.dialogMenu = true;
-      this.getMenus();
-      getRoleIdByMenuId(role_id).then(response => {
-        //根据对应关系设置选中节点 role_menu_data
-        //TODO
-        this.role_menu_data = response.data;
+//       if (this.dialogRoleType == "ADD") {
+//         this.$refs['roleForm'].resetFields();
+//         //新建角色
+//         addRole(this.role_data).then(response => {
+//           //新建完成，更新角色列表
+//           this.role_list.push(response.data);
+//           this.$message(response.msg);
+//           this.dialogRole = false;
+//         });
+//       } else {
+//         //编辑角色
+//         updateRole(this.role_data).then(response => {
+//           this.$message(response.msg);
+//           this.dialogRole = false;
+//         });
+//       }
+//     },
+//     //根据角色ID查询对应选中的菜单节点
+//     roleMenuHandle(role_id) {
+//       this.role_id = role_id;
+//       this.dialogMenu = true;
+//       this.getMenus();
+//       getRoleIdByMenuId(role_id).then(response => {
+//         //根据对应关系设置选中节点 role_menu_data
+//         //TODO
+//         this.role_menu_data = response.data;
 
-        const { data } = response;
-        let nodes = [];
-        for (let x in data) {
-          nodes.push(data[x].menu_id);
-        }
+//         const { data } = response;
+//         let nodes = [];
+//         for (let x in data) {
+//           nodes.push(data[x].menu_id);
+//         }
 
-        this.$refs.tree.setCheckedKeys(nodes);
-      });
-    },
+//         this.$refs.tree.setCheckedKeys(nodes);
+//       });
+//     },
 
-    //保存选中的的菜单节点
-    addRoleMenu() {
-      const nodes = [];
-      const menu_nodes = this.$refs.tree.getCheckedKeys();
-      menu_nodes.forEach(item => {
-        nodes.push({ role_id: this.role_id, menu_id: item });
-      });
-      addRoleMenu(this.role_id, nodes).then(response => {
-        this.$message(response.msg);
-        this.dialogMenu = false;
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    }
-  },
-  components: {}
-};
+//     //保存选中的的菜单节点
+//     addRoleMenu() {
+//       const nodes = [];
+//       const menu_nodes = this.$refs.tree.getCheckedKeys();
+//       menu_nodes.forEach(item => {
+//         nodes.push({ role_id: this.role_id, menu_id: item });
+//       });
+//       addRoleMenu(this.role_id, nodes).then(response => {
+//         this.$message(response.msg);
+//         this.dialogMenu = false;
+//       });
+//     },
+//     resetForm(formName) {
+//       this.$refs[formName].resetFields();
+//     }
+//   },
+//   components: {}
+// };
 </script>
 
