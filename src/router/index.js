@@ -149,11 +149,11 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: '/system/organization',
-        name: 'organization',
-        component: () => import('@/views/system/organization'),
+        path: '/system/role',
+        name: 'role',
+        component: () => import('@/views/system/role'),
         meta: {
-          title: 'organization',
+          title: 'role',
         }
       },
       {

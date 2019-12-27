@@ -67,16 +67,7 @@
       title="权限菜单"
     >
 
-      <el-tree
-        ref="tree"
-        :data="menu_list"
-        show-checkbox
-        :default-expand-all="true"
-        node-key="id"
-        :check-strictly="true"
-        :props="defaultProps"
-      >
-      </el-tree>
+
 
       <div slot="footer">
         <el-button

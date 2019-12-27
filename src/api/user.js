@@ -36,7 +36,19 @@ export function addUserRole(data) {
 }
 
 
+export function getUsers() {
+  return request({
+    url: `/user/getUsers`,
+    method: 'get'
+  })
+}
 
+export function getUserByRoleId(role_id) {
+  return request({
+    url: `/user/getUserByRoleId/${role_id}`,
+    method: 'get'
+  })
+}
 
 
 

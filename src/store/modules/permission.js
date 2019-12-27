@@ -56,11 +56,15 @@ export function filterAsyncRoutes(routes, roles) {
 
 const state = {
   routes: [],
+  selectIds: []
 }
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.routes = constantRoutes.concat(routes)
+  },
+  SET_SELECT_IDS: (state, selectIds) => {
+    state.selectIds = selectIds;
   }
 }
 
@@ -82,7 +86,10 @@ const actions = {
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })
-  }
+  },
+  setSelectIds({ commit }, selectIds) {
+    commit('SET_SELECT_IDS', selectIds)
+  },
 }
 
 export default {

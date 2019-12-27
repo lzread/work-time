@@ -1,11 +1,10 @@
 import request from '@/utils/request'
 /**
  * 获取角色菜单
- * @param {Number} user_id 用户ID
  */
-export function getMenus(user_id) {
+export function getMenus() {
     return request({
-        url: `/menu/getMenus/${user_id}`,
+        url: '/menu/getMenus',
         method: 'get'
     })
 }

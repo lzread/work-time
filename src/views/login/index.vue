@@ -59,7 +59,7 @@ export default {
       redirect: undefined,
       otherQuery: {},
       loginForm: {
-        username: "s1",
+        username: "m2",
         password: "123456"
       }
     };
