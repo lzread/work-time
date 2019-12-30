@@ -36,10 +36,11 @@ export function addUserRole(data) {
 }
 
 
-export function getUsers() {
+export function getUsers(query) {
   return request({
     url: `/user/getUsers`,
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 
@@ -47,6 +48,15 @@ export function getUserByRoleId(role_id) {
   return request({
     url: `/user/getUserByRoleId/${role_id}`,
     method: 'get'
+  })
+}
+
+
+export function deleteUserRole(data) {
+  return request({
+    url: `/user/deleteUserRole`,
+    method: 'post',
+    data
   })
 }
 

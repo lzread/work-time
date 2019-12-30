@@ -16,63 +16,76 @@
         :data="roles"
         stripe
       >
+
         <el-table-column
           prop="role_name"
           label="角色名称"
         >
         </el-table-column>
-        <!--
-          <el-table-column label="状态">
-            <template slot-scope="scope">
-              <el-tag
-                v-if="scope.row.status == -1"
-                size="mini"
-              >系统</el-tag>
-              <el-tag
-                v-else-if="scope.row.status == 0"
-                size="mini"
-              >正常</el-tag>
-              <el-tag
-                v-else-if="scope.row.status == 1"
-                size="mini"
-                type="info"
-              >停用</el-tag>
-              <el-tag
-                v-else
-                size="mini"
-              >其他</el-tag>
-            </template>
-          </el-table-column>
-          -->
-        <el-table-column label="操作">
+
+        <el-table-column label="状态">
+          <template slot-scope="scope">
+            <el-tag
+              v-if="scope.row.status == -1"
+              size="mini"
+            >系统</el-tag>
+            <el-tag
+              v-else-if="scope.row.status == 0"
+              size="mini"
+            >正常</el-tag>
+            <el-tag
+              v-else-if="scope.row.status == 1"
+              size="mini"
+              type="info"
+            >停用</el-tag>
+            <el-tag
+              v-else
+              size="mini"
+            >其他</el-tag>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          label="操作"
+          width="300"
+        >
           <template slot-scope="scope">
             <el-button
               @click="updateRoleHandle(scope.row)"
               v-if="scope.row.status != -1"
-              type="primary"
+              type="text"
               size="mini"
-            >e</el-button>
+            >编辑</el-button>
             <el-button
               @click="permissionHandle(scope.row)"
               v-if="scope.row.status != -1"
               size="mini"
-              type="primary"
-            >p</el-button>
+              type="text"
+            >权限</el-button>
             <el-button
               @click="userHandle(scope.row)"
               size="mini"
-              type="primary"
-            >u</el-button>
+              type="text"
+            >管理</el-button>
             <el-button
               @click="deleteRoleHandle(scope.$index, scope.row)"
               v-if="scope.row.status != -1"
-              type="danger"
+              type="text"
               size="mini"
-            >d</el-button>
+            >删除</el-button>
 
           </template>
         </el-table-column>
+
       </el-table>
+
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="listQuery.page"
+        :limit.sync="listQuery.limit"
+        @pagination="getRoles"
+      />
 
     </div>
 
@@ -104,7 +117,7 @@
     </el-dialog>
 
     <el-dialog
-      width="640px"
+      width="400px"
       :visible.sync="dialogVisibleRole"
       :title="dialogVisibleRoleType == 'add' ? '新建角色' : '编辑角色' "
     >
@@ -112,17 +125,24 @@
       <el-form
         ref="roleForm"
         :model="role"
+        :rules="rules"
         label-width="80px"
         label-position="left"
         size="mini"
       >
-        <el-form-item label="角色名称">
+        <el-form-item
+          label="角色名称"
+          prop="role_name"
+        >
           <el-input
             v-model="role.role_name"
             placeholder="请输入角色名称"
           />
         </el-form-item>
-        <el-form-item label="角色代码">
+        <el-form-item
+          label="角色代码"
+          prop="role_code"
+        >
           <el-input
             v-model="role.role_code"
             placeholder="请输入角色名称"
@@ -131,7 +151,7 @@
         <el-form-item label="角色描述">
           <el-input
             v-model="role.role_desc"
-            :autosize="{ minRows: 2, maxRows: 4}"
+            :autosize="{ minRows: 5, maxRows: 10}"
             type="textarea"
             placeholder="请输入角色描述"
           />
@@ -148,7 +168,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="dialogVisibleRole = false"
+          @click="dialogVisibleRole = false, resetForm('roleForm')"
         >取消</el-button>
         <el-button
           size="mini"
@@ -162,24 +182,32 @@
     <el-dialog
       width="640px"
       :visible.sync="dialogVisibleUser"
-      title="角色用户"
+      title="关联用户"
     >
 
       <el-table
         :data="users"
         stripe
       >
+
         <el-table-column
           prop="username"
           label="用户名"
         >
         </el-table-column>
+        <el-table-column
+          prop="realname"
+          label="真实姓名"
+        >
+        </el-table-column>
 
-        <el-table-column label="操作">
+        <el-table-column
+          label="操作"
+          width="80"
+        >
           <template slot-scope="scope">
-
-            <!-- <el-button
-              v-if="'1,2,3'|isCurrentRole"
+            <el-button
+              v-if="isCurrent(scope.row)"
               @click="addUserRoleHandle(scope.row)"
               size="mini"
               type="primary"
@@ -190,12 +218,19 @@
               @click="deleteUserRoleHandle(scope.row)"
               size="mini"
               type="danger"
-            >取消</el-button> -->
+            >取消</el-button>
 
           </template>
         </el-table-column>
+
       </el-table>
-      <pre>{{users}}</pre>
+      <pagination
+        v-show="userTotal > 0"
+        :total="userTotal"
+        :page.sync="userListQuery.page"
+        :limit.sync="userListQuery.limit"
+        @pagination="getUsers"
+      />
 
     </el-dialog>
 
@@ -213,9 +248,15 @@ import {
   deleteRole,
   addRoleMenuBatch
 } from "@/api/role";
-import { getUsers, getUserByRoleId } from "@/api/user";
-import { deepClone } from "@/utils";
+import {
+  getUsers,
+  getUserByRoleId,
+  addUserRole,
+  deleteUserRole
+} from "@/api/user";
+import { deepClone, arrayKey } from "@/utils";
 import PermissionList from "./components/PermissionList";
+import Pagination from "@/components/Pagination";
 
 export default {
   name: "role",
@@ -233,7 +274,27 @@ export default {
       dialogVisibleRole: false,
       dialogVisibleRoleType: "",
       dialogVisibleUser: false,
-      dialogVisiblePermission: false
+      dialogVisiblePermission: false,
+      rules: {
+        role_name: [
+          { required: true, message: "请输入角色名称", trigger: "blur" },
+          { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+        ],
+        role_code: [
+          { required: true, message: "请输入角色代码", trigger: "blur" },
+          { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+        ]
+      },
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 10
+      },
+      userTotal: 0,
+      userListQuery: {
+        page: 1,
+        limit: 10
+      },
     };
   },
   created() {
@@ -241,12 +302,7 @@ export default {
     this.getAllMenus();
     this.getUsers();
   },
-  filters: {
-    isCurrentRole(value) {
-      console.log(value);
-      return false;
-    }
-  },
+  filters: {},
   computed: {},
   methods: {
     async getAllMenus() {
@@ -254,8 +310,9 @@ export default {
       this.menus = data;
     },
     async getRoles() {
-      const { data } = await getRoles();
+      const { data, total } = await getRoles(this.listQuery);
       this.roles = data;
+      this.total = total;
     },
     async addRoleMenu() {
       this.dialogVisiblePermission = false;
@@ -268,7 +325,6 @@ export default {
       });
       const { data } = await addRoleMenuBatch(this.role_id, arr);
     },
-
     addRoleHandle() {
       this.role = { status: 0 };
       this.dialogVisibleRoleType = "add";
@@ -279,40 +335,74 @@ export default {
       this.dialogVisibleRole = true;
       this.role = deepClone(row);
     },
-    async getUsers() {
-      const { data } = await getUsers();
-      this.users = data;
-    },
     userHandle(row) {
+      this.userListQuery.page = 1;
+      this.getUsers();
       this.dialogVisibleUser = true;
       this.role_id = row.id;
     },
-
-    addUserRoleHandle(row) {},
-
-    deleteUserRoleHandle(row) {},
-
-    async deleteRoleHandle(index, row) {
-      this.roles.splice(index, 1);
-      await deleteRole(row.id);
+    async getUsers() {
+      const { data, total } = await getUsers(this.userListQuery);
+      this.users = data;
+      this.userTotal = total;
     },
-
-    async saveRole() {
-      if (this.dialogVisibleRoleType == "add") {
-        try {
-          await getRoleNameExist(this.role.role_code);
-          await addRole(this.role);
-        } catch (error) {
-          return;
-        }
-      } else {
-        await updateRole(this.role);
+    async addUserRoleHandle(row) {
+      const { data } = await addUserRole({
+        user_id: row.id,
+        role_id: this.role_id
+      });
+      if (data) {
+        let ids = row.role_ids ? row.role_ids.split(",") : [];
+        ids.push(this.role_id);
+        row.role_ids = ids.join(",");
       }
-
-      this.dialogVisibleRole = false;
-      this.getRoles();
     },
+    async deleteUserRoleHandle(row) {
+      const { data } = await deleteUserRole({
+        user_id: row.id,
+        role_id: this.role_id
+      });
 
+      if (data) {
+        let ids = row.role_ids.split(",");
+        ids.splice(arrayKey(ids, this.role_id), 1);
+        row.role_ids = ids.join(",");
+      }
+    },
+    deleteRoleHandle(index, row) {
+      this.$confirm("是否删除当前角色?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+        this.roles.splice(index, 1);
+        await deleteRole(row.id);
+        this.$message({
+          type: "success",
+          message: "删除成功!"
+        });
+      });
+    },
+    saveRole() {
+      this.$refs["roleForm"].validate(async valid => {
+        if (valid) {
+          if (this.dialogVisibleRoleType == "add") {
+            try {
+              await getRoleNameExist(this.role.role_code);
+              await addRole(this.role);
+            } catch (error) {
+              return;
+            }
+          } else {
+            await updateRole(this.role);
+          }
+          this.dialogVisibleRole = false;
+          this.getRoles();
+        } else {
+          return false;
+        }
+      });
+    },
     async permissionHandle(row) {
       const { id } = row;
       this.role_id = id;
@@ -325,11 +415,27 @@ export default {
       });
       this.setCheckedKeys = keys;
     },
+    isCurrent(row) {
+      if (row.role_ids) {
+        let arr = row.role_ids.split(",");
+        let role_id = this.role_id.toString();
+        if (arr.includes(role_id)) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    },
     getCheckedKeys(data) {
       this.checkedKeys = data;
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   },
-  components: { PermissionList }
+  components: { PermissionList, Pagination }
 };
 </script>
 

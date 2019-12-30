@@ -40,6 +40,7 @@
 
 <script>
 import { deepClone } from "@/utils";
+
 export default {
   name: "PermList",
   data() {

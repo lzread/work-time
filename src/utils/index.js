@@ -357,4 +357,15 @@ export function formatJson(filterVal, jsonData) {
   );
 }
 
-
+/**
+ * 获取数组下标
+ * @param {Array} arr 
+ * @param {String} item 
+ */
+export function arrayKey(arr, item) {
+  for (var i in arr) {
+    if (arr[i] == item) {
+      return i;
+    };
+  };
+}
