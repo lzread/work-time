@@ -22,9 +22,7 @@
         label-position="left"
         size="mini"
       >
-        <el-form-item
-          label="角色名称"
-        >
+        <el-form-item label="角色名称">
           <el-input
             v-model="role_data.role_name"
             placeholder="请输入角色名称"
@@ -66,8 +64,6 @@
       :visible.sync="dialogMenu"
       title="权限菜单"
     >
-
-
 
       <div slot="footer">
         <el-button
@@ -235,7 +231,7 @@
 //       this.role_data = {};
 //       this.dialogRole = true;
 //       this.dialogRoleType = "ADD";
-      
+
 //     },
 
 //     //编辑角色按钮

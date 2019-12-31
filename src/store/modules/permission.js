@@ -18,11 +18,10 @@ function hasPermission(roles, route) {
 
 function makePermissionRouters(serverRouter, clientAsyncRoutes) {
   clientAsyncRoutes.map(ele => {
-    if (!ele.name || (!ele.meta && !ele.meta.roles)) return
     for (let i = 0; i < serverRouter.length; i++) {
       const element = serverRouter[i]
       if (ele.name === element.name) {
-        ele.meta.roles = element.roles
+        ele.roles = element.roles
       }
     }
     if (ele.children) {
@@ -39,7 +38,6 @@ function makePermissionRouters(serverRouter, clientAsyncRoutes) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-  console.log(roles);
   routes.forEach(route => {
     const tmp = { ...route }
 
@@ -71,9 +69,10 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, { roles, serverRouter }) {
     return new Promise(resolve => {
-      let accessedRoutes
-
+      let accessedRoutes;
       const routes = makePermissionRouters(serverRouter, asyncRoutes);
+
+      console.log(routes);
 
       if (roles.includes('admin')) {
         accessedRoutes = routes || []

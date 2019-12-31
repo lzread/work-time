@@ -1,7 +1,7 @@
 <template>
   <div id="Layout">
 
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    
 
       <nav-bar />
       <side-bar />
@@ -10,7 +10,7 @@
 
       <create-flow></create-flow>
 
-    </el-scrollbar>
+    
 
   </div>
 </template>

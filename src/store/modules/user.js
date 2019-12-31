@@ -95,9 +95,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       getMenus().then(response => {
         const { data } = response
-        for (let x in data) {
-          data[x].roles = data[x].roles.split(",");
-        }
         commit('SET_SERVER_ROUTER', data);
         resolve(data)
       }).catch(error => {

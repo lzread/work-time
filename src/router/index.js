@@ -64,8 +64,7 @@ export const asyncRoutes = [
         name: 'workflowList',
         component: () => import('@/views/workflow/list'),
         meta: {
-          title: 'list',
-          perm: ['add','update','delete']
+          title: 'list'
         }
       },
       {

@@ -1,83 +1,101 @@
 <template>
-  <div id="role">
 
-    <div class="head">
-
-      <el-button
+  <div class="container">
+    <div class="searchBar">
+      <el-form
+        :inline="true"
         size="mini"
-        @click="addRoleHandle"
-      >新建</el-button>
-
+        class="demo-form-inline"
+      >
+        <el-form-item>
+          <el-input placeholder="请输入角色修改信息"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary">搜索</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button>重置</el-button>
+        </el-form-item>
+      </el-form>
     </div>
 
-    <div class="main">
+    <div class="filterBar">
+      <el-button
+        size="mini"
+        type="primary"
+        @click="addRoleHandle"
+      >新建角色</el-button>
+    </div>
 
-      <el-table
-        :data="roles"
-        stripe
-      >
-
-        <el-table-column
-          prop="role_name"
-          label="角色名称"
+    <div class="tableArea">
+      <el-scrollbar wrap-class="scrollbar-wrapper">
+        <el-table
+          :data="roles"
+          stripe
         >
-        </el-table-column>
 
-        <el-table-column label="状态">
-          <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.status == -1"
-              size="mini"
-            >系统</el-tag>
-            <el-tag
-              v-else-if="scope.row.status == 0"
-              size="mini"
-            >正常</el-tag>
-            <el-tag
-              v-else-if="scope.row.status == 1"
-              size="mini"
-              type="info"
-            >停用</el-tag>
-            <el-tag
-              v-else
-              size="mini"
-            >其他</el-tag>
-          </template>
-        </el-table-column>
+          <el-table-column
+            prop="role_name"
+            label="角色名称"
+          >
+          </el-table-column>
 
-        <el-table-column
-          label="操作"
-          width="300"
-        >
-          <template slot-scope="scope">
-            <el-button
-              @click="updateRoleHandle(scope.row)"
-              v-if="scope.row.status != -1"
-              type="text"
-              size="mini"
-            >编辑</el-button>
-            <el-button
-              @click="permissionHandle(scope.row)"
-              v-if="scope.row.status != -1"
-              size="mini"
-              type="text"
-            >权限</el-button>
-            <el-button
-              @click="userHandle(scope.row)"
-              size="mini"
-              type="text"
-            >管理</el-button>
-            <el-button
-              @click="deleteRoleHandle(scope.$index, scope.row)"
-              v-if="scope.row.status != -1"
-              type="text"
-              size="mini"
-            >删除</el-button>
+          <el-table-column label="状态">
+            <template slot-scope="scope">
+              <el-tag
+                v-if="scope.row.status == -1"
+                size="mini"
+              >系统</el-tag>
+              <el-tag
+                v-else-if="scope.row.status == 0"
+                size="mini"
+              >正常</el-tag>
+              <el-tag
+                v-else-if="scope.row.status == 1"
+                size="mini"
+                type="info"
+              >停用</el-tag>
+              <el-tag
+                v-else
+                size="mini"
+              >其他</el-tag>
+            </template>
+          </el-table-column>
 
-          </template>
-        </el-table-column>
+          <el-table-column
+            label="操作"
+            width="300"
+          >
+            <template slot-scope="scope">
+              <el-button
+                @click="updateRoleHandle(scope.row)"
+                v-if="scope.row.status != -1"
+                type="text"
+                size="mini"
+              >编辑</el-button>
+              <el-button
+                @click="permissionHandle(scope.row)"
+                v-if="scope.row.status != -1"
+                size="mini"
+                type="text"
+              >权限</el-button>
+              <el-button
+                @click="userHandle(scope.row)"
+                size="mini"
+                type="text"
+              >管理</el-button>
+              <el-button
+                @click="deleteRoleHandle(scope.$index, scope.row)"
+                v-if="scope.row.status != -1"
+                type="text"
+                size="mini"
+              >删除</el-button>
 
-      </el-table>
+            </template>
+          </el-table-column>
+
+        </el-table>
+      </el-scrollbar>
 
       <pagination
         v-show="total > 0"
@@ -86,7 +104,6 @@
         :limit.sync="listQuery.limit"
         @pagination="getRoles"
       />
-
     </div>
 
     <el-dialog
@@ -127,7 +144,7 @@
         :model="role"
         :rules="rules"
         label-width="80px"
-        label-position="left"
+        label-position="right"
         size="mini"
       >
         <el-form-item
@@ -235,6 +252,7 @@
     </el-dialog>
 
   </div>
+
 </template>
 
 <script>
@@ -294,7 +312,7 @@ export default {
       userListQuery: {
         page: 1,
         limit: 10
-      },
+      }
     };
   },
   created() {

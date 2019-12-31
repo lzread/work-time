@@ -1,6 +1,6 @@
-@import './variables.scss';
-@import './mixin.scss';
-@import './element-variables.scss';
+@import "./variables.scss";
+@import "./mixin.scss";
+@import "./element-variables.scss";
 
 body {
   height: 100%;
@@ -21,6 +21,7 @@ html {
 
 #app {
   height: 100%;
+  overflow: hidden;
 }
 
 *,
@@ -28,8 +29,6 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
-
 
 a:focus,
 a:active {
@@ -59,7 +58,6 @@ div:focus {
   }
 }
 
-
 .scrollbar-wrapper {
   overflow-x: hidden !important;
   height: 100%;
@@ -78,11 +76,11 @@ div:focus {
   overflow-x: auto;
 }
 
+.container {
+  height: 100%;
+}
 
-
-
-
-.head {
+.searchBar {
   padding: 5px;
   border-bottom: 1px solid #e6e6e6;
   display: flex;
@@ -91,8 +89,6 @@ div:focus {
   .el-form-item--mini.el-form-item {
     margin: 0;
   }
-
-
 
   .cell {
     flex-grow: 1;
@@ -104,9 +100,16 @@ div:focus {
   }
 }
 
-.main {
-  .el-table {
+.filterBar {
+  padding: 5px;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  align-items: center;
+}
 
+.tableArea {
+  height: calc(100% - 150px);
+  .el-table {
     td,
     th {
       padding: 5px 0;
@@ -115,6 +118,10 @@ div:focus {
     .el-image {
       overflow: visible;
     }
+  }
+  .pagination-container {
+    background: #fff;
+    padding: 10px 5px;
   }
 }
 
@@ -132,7 +139,6 @@ div:focus {
         height: 34px;
         line-height: 34px;
       }
-
     }
   }
 
@@ -141,7 +147,6 @@ div:focus {
     border-left: 1px solid #e6e6e6;
 
     .el-table {
-
       td,
       th {
         padding: 5px 0;
