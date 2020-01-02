@@ -1,15 +1,20 @@
 <template>
   <div id="SideBar">
 
+
+
+
+ 
+
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <div class="btn-wrap">
-        <!-- <button
+         <button
           class="create-flow-btn"
           @click="createFlow"
         >
           <i class="el-icon-plus"></i>
           <span></span>
-        </button> -->
+        </button>
       </div>
       <el-menu
         unique-opened
@@ -20,6 +25,8 @@
         <sidebar-item :items="permission_routes"></sidebar-item>
       </el-menu>
     </el-scrollbar>
+
+
 
   </div>
 </template>

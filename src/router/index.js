@@ -95,7 +95,7 @@ export const asyncRoutes = [
       },
       {
         path: '/workflow/forms',
-        name: 'forms',
+        name: 'workflowForms',
         component: () => import('@/views/workflow/forms/index'),
         meta: {
           title: 'forms',
@@ -112,7 +112,7 @@ export const asyncRoutes = [
           },
           {
             path: '/workflow/forms/list',
-            name: 'formList',
+            name: 'workflowFormList',
             component: () => import('@/views/workflow/forms/list'),
             meta: {
               title: 'form list',
@@ -148,19 +148,19 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: '/system/role',
-        name: 'role',
-        component: () => import('@/views/system/role'),
+        path: '/system/roles',
+        name: 'roles',
+        component: () => import('@/views/system/roles'),
         meta: {
-          title: 'role',
+          title: 'roles',
         }
       },
       {
-        path: '/system/permission',
-        name: 'permission',
-        component: () => import('@/views/system/permission'),
+        path: '/system/menus',
+        name: 'menus',
+        component: () => import('@/views/system/menus'),
         meta: {
-          title: 'permission',
+          title: 'menus',
         },
       },
 

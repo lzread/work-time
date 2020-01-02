@@ -1,9 +1,11 @@
 <template>
   <div id="FlowManage" >
 
-    <button v-permission="'add'">add</button>
-    <button v-permission="'update'">update</button>
-    <button v-permission="'delete'">delete</button>
+    <button v-permission="'ADD'">ADD</button>
+    <button v-permission="'EDIT'">EDIT</button>
+    <button v-permission="'DELETE'">DELETE</button>
+
+   
 
   </div>
 </template>

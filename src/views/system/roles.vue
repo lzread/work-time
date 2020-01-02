@@ -23,6 +23,7 @@
       <el-button
         size="mini"
         type="primary"
+        v-permission="'ADD'"
         @click="addRoleHandle"
       >新建角色</el-button>
     </div>
@@ -72,6 +73,7 @@
                 v-if="scope.row.status != -1"
                 type="text"
                 size="mini"
+                v-permission="'EDIT'"
               >编辑</el-button>
               <el-button
                 @click="permissionHandle(scope.row)"
@@ -275,7 +277,7 @@ import {
 import { deepClone, arrayKey } from "@/utils";
 import PermissionList from "./components/PermissionList";
 import Pagination from "@/components/Pagination";
-
+import permission from "@/directive/permission/index.js"; // 权限判断指令
 export default {
   name: "role",
   data() {
@@ -453,12 +455,13 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
+  directives: { permission },
   components: { PermissionList, Pagination }
 };
 </script>
 
 <style>
-#NavBar,
+/* #NavBar,
 #SideBar,
 #TagsView {
   display: none !important;
@@ -467,5 +470,5 @@ export default {
 #AppMain {
   padding: 0 !important;
   margin: 0 !important;
-}
+} */
 </style>
