@@ -3,12 +3,12 @@
 
     
 
-      <nav-bar />
+      <!-- <nav-bar /> -->
       <side-bar />
-      <tags-view />
+      <!-- <tags-view /> -->
       <app-main />
 
-      <create-flow></create-flow>
+      <!-- <create-flow></create-flow> -->
 
     
 
