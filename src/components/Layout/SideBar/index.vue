@@ -7,7 +7,7 @@
  
 
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <div class="btn-wrap">
+      <!-- <div class="btn-wrap">
          <button
           class="create-flow-btn"
           @click="createFlow"
@@ -15,7 +15,7 @@
           <i class="el-icon-plus"></i>
           <span></span>
         </button>
-      </div>
+      </div> -->
       <el-menu
         unique-opened
         router

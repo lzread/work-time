@@ -135,23 +135,6 @@
           />
         </el-form-item>
 
-        <el-form-item label="菜单图标">
-          <el-select
-            v-model="menu.icon"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in icons"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-              <span style="float: left">{{ item.label }}</span>
-              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
-            </el-option>
-          </el-select>
-        </el-form-item>
-
         <el-form-item label="是否隐藏">
           <el-switch v-model="menu.hidden"></el-switch>
         </el-form-item>
@@ -218,4 +201,14 @@ export default {
 </script>
 
 <style>
+#NavBar,
+#SideBar,
+#TagsView {
+  display: none !important;
+}
+#Layout,
+#AppMain {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 </style>

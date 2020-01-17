@@ -1,11 +1,6 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes } from '@/router'
+import routerComponentsMap from '@/router/map.js'
 
-
-/**
- * Use meta.role to determine if the current user has permission
- * @param roles
- * @param route
- */
 function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
@@ -14,34 +9,38 @@ function hasPermission(roles, route) {
   }
 }
 
-function makePermissionRouters(serverRouter, clientAsyncRoutes) {
-  
-  clientAsyncRoutes.map(ele => {
-    if(!ele.meta){
-      ele.meta = {};
-    }
-    for (let i = 0; i < serverRouter.length; i++) {
-      const element = serverRouter[i]
-      if (ele.name === element.name) {
+function makePermissionRouters(serverRouter) {
+  let obj = [];
+  let map = [];
+  serverRouter.forEach(item => {
+    map[item.id] = item;
+  });
+  serverRouter.forEach(item => {
+    if (routerComponentsMap[item.name]) {
+      item.component = routerComponentsMap[item.name];
+      let parent = map[item.parent_id];
+      item.meta = {};
+      item.meta.roles = stringToArray(item.roles);
+      item.meta.permission = matchPermission(serverRouter, item);
+      item.meta.title = item.title;
+      item.hidden = item.hidden == 'false' ? false : true;
+      delete item.roles;
+      delete item.title;
 
-        ele.path = element.path;
-        ele.hidden = element.hidden == 'false' ? false : true;
-        ele.meta.title = element.title;
-        ele.meta.icon = element.icon;
-        ele.meta.roles = stringToArray(element.roles);
-        ele.meta.permission = matchPermission(serverRouter, element, ele);
+      if (parent) {
+        if (!Array.isArray(parent.children)) {
+          parent.children = [];
+        }
+        parent.children.push(item);
+      } else {
+        obj.push(item);
       }
     }
-    if (ele.children) {
-      makePermissionRouters(serverRouter, ele.children)
-    }
-  })
-  return clientAsyncRoutes
+  });
+  return obj;
 }
 
-
-
-function matchPermission(serverRouter, element, ele) {
+function matchPermission(serverRouter, element) {
   if (element.type == 0) {
     let res = [];
     serverRouter.map(item => {
@@ -67,11 +66,6 @@ function stringToArray(res) {
   }
 }
 
-/**
- * Filter asynchronous routing tables by recursion
- * @param routes asyncRoutes
- * @param roles
- */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
   routes.forEach(route => {
@@ -84,7 +78,6 @@ export function filterAsyncRoutes(routes, roles) {
       res.push(tmp)
     }
   })
-
   return res
 }
 
@@ -104,16 +97,15 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, { roles, serverRouter }) {
-
     return new Promise(resolve => {
       let accessedRoutes;
-      const routes = makePermissionRouters(serverRouter, asyncRoutes);
+      const routes = makePermissionRouters(serverRouter);
+
       if (roles.includes('admin')) {
         accessedRoutes = routes || []
       } else {
         accessedRoutes = filterAsyncRoutes(routes, roles)
       }
-
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })
