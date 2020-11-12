@@ -73,7 +73,7 @@ const actions = {
         }
 
         const { roles, powers, name, avatar, introduction } = data
-
+        console.log(roles);
         if (!roles || roles.length <= 0) {
           reject('您还未必分配角色，请联系管理员!')
         }
@@ -95,6 +95,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getMenus().then(response => {
         const { data } = response
+        console.log(data);
         commit('SET_SERVER_ROUTER', data);
         resolve(data)
       }).catch(error => {

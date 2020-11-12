@@ -1,33 +1,16 @@
 <template>
   <div id="SideBar">
-
-
-
-
- 
-
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <!-- <div class="btn-wrap">
-         <button
-          class="create-flow-btn"
-          @click="createFlow"
-        >
+      <div class="btn-wrap">
+        <button class="create-flow-btn" @click="createFlow">
           <i class="el-icon-plus"></i>
           <span></span>
         </button>
-      </div> -->
-      <el-menu
-        unique-opened
-        router
-        :default-active="$route.path"
-      >
-
+      </div>
+      <el-menu unique-opened router :default-active="$route.path">
         <sidebar-item :items="permission_routes"></sidebar-item>
       </el-menu>
     </el-scrollbar>
-
-
-
   </div>
 </template>
 <script>
@@ -37,14 +20,14 @@ import SidebarItem from "./SidebarItem";
 export default {
   name: "SideBar",
   computed: {
-    ...mapGetters(["permission_routes"])
+    ...mapGetters(["permission_routes"]),
   },
   methods: {
     createFlow() {
       this.$store.dispatch("workflow/setDialogVisible", true);
-    }
+    },
   },
-  components: { SidebarItem }
+  components: { SidebarItem },
 };
 </script>
 

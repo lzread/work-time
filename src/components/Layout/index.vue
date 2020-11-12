@@ -1,17 +1,11 @@
 <template>
   <div id="Layout">
+    <nav-bar />
+    <side-bar />
+    <tags-view />
+    <app-main />
 
-    
-
-      <!-- <nav-bar /> -->
-      <side-bar />
-      <!-- <tags-view /> -->
-      <app-main />
-
-      <!-- <create-flow></create-flow> -->
-
-    
-
+    <create-flow></create-flow>
   </div>
 </template>
 
@@ -36,7 +30,7 @@ import CreateFlow from "@/components/Workflow/create";
 
 export default {
   name: "Layout",
-  components: { NavBar, SideBar, AppMain, TagsView, CreateFlow }
+  components: { NavBar, SideBar, AppMain, TagsView, CreateFlow },
 };
 </script>
 

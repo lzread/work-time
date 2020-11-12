@@ -72,8 +72,10 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
+    const res = error.response.data
+    console.log(res);
     Message({
-      message: error.message,
+      message: res.message,
       type: 'error',
       duration: 5 * 1000
     })

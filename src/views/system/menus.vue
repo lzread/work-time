@@ -103,7 +103,6 @@
       <el-form
         ref="menuForm"
         :model="menu"
-        :rules="rules"
         label-width="80px"
         label-position="right"
         size="mini"
@@ -201,14 +200,5 @@ export default {
 </script>
 
 <style>
-#NavBar,
-#SideBar,
-#TagsView {
-  display: none !important;
-}
-#Layout,
-#AppMain {
-  padding: 0 !important;
-  margin: 0 !important;
-}
+
 </style>

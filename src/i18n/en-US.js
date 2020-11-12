@@ -1,7 +1,7 @@
 const language = {
 
     Login: {
-        titleText: 'wecome login',
+        titleText: 'Wecome login',
         usernamePlaceholderText: 'username',
         passwordPlaceholderText: 'password',
         buttonText: 'login',
