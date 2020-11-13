@@ -25,6 +25,7 @@ export const constantRoutes = [
     hidden: true,
     meta: {
       title: '404',
+      
     }
   },
   {
@@ -34,7 +35,7 @@ export const constantRoutes = [
       name: 'index',
       component: () => import('@/views/home/index'),
       meta: {
-        title: 'index',
+        title: '首页',
       }
     }]
   },

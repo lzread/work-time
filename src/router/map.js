@@ -1,17 +1,18 @@
 
 const componentMaps = {
-    "workflow": () => import('@/components/Layout'),
-    "workflowList": () => import('@/views/workflow/list'),
-    "workflowSettings": () => import('@/views/workflow/settings/index'),
-    "workflowCategory": () => import('@/views/workflow/settings/category'),
-    "workflowTemplate": () => import('@/views/workflow/settings/template'),
-    "workflowForms": () => import('@/views/workflow/forms/index'),
-    "formCreate": () => import('@/views/workflow/forms/create'),
-    "workflowFormList": () => import('@/views/workflow/forms/store'),
-    "formStore": () => import('@/views/workflow/list'),
-    "workflowStore": () => import('@/views/workflow/store'),
+    //系统管理
     "system": () => import('@/components/Layout'),
-    "roles": () => import('@/views/system/roles'),
-    "menus": () => import('@/views/system/menus'),
+    "roles": () => import('@/views/system/roles/index'),
+    "users": () => import('@/views/system/users/index'),
+    "department": () => import('@/views/system/department/index'),
+    "menus": () => import('@/views/system/menus/index'),
+    "logs": () => import('@/views/system/logs/index'),
+    //办公管理
+    "work": () => import('@/components/Layout'),
+    "notice": () => import('@/views/work/notice/index'),
+    "contacts": () => import('@/views/work/contacts/index'),
+    "attendance": () => import('@/views/work/attendance/index'),
+    "report": () => import('@/views/work/report/index'),
+    "schedule": () => import('@/views/work/schedule/index'),
 }
 export default componentMaps;

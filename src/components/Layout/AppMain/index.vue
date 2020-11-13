@@ -1,22 +1,22 @@
 <template>
-  <div id="AppMain">
+    <div id="AppMain">
 
-    <transition name="slide-fade">
+        <transition name="slide-fade">
 
-      <router-view />
+            <router-view />
 
-    </transition>
+        </transition>
 
-  </div>
+    </div>
 </template>
 <script>
 export default {
-  name: "AppMain"
+    name: "AppMain",
 };
 </script>
 <style lang="scss" scoped>
 #AppMain {
-  margin-top: 90px;
-  height: calc(100% - 90px);
+    margin-top: 90px;
+    height: calc(100% - 90px);
 }
 </style>

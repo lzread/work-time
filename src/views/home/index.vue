@@ -1,24 +1,20 @@
 <template>
-  <div id="home">
-
-    home
-   
-  </div>
+  <div />
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "home",
+  name: 'Home',
+  props: {},
   data() {
-    return {
-        
-    };
+    return {}
   },
   created() {},
-  computed: {},
-  methods: {},
-  components: { }
-};
+  mounted() {},
+  methods: {}
+}
 </script>
 
+<style lang="scss" scoped>
+
+</style>

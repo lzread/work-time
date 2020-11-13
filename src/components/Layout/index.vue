@@ -1,12 +1,10 @@
 <template>
-  <div id="Layout">
-    <nav-bar />
-    <side-bar />
-    <tags-view />
-    <app-main />
-
-    <create-flow></create-flow>
-  </div>
+    <div id="Layout">
+        <nav-bar />
+        <side-bar />
+        <tags-view />
+        <app-main />
+    </div>
 </template>
 
 <script>
@@ -26,20 +24,18 @@ import SideBar from "./SideBar";
 import AppMain from "./AppMain";
 import TagsView from "./TagsView";
 
-import CreateFlow from "@/components/Workflow/create";
-
 export default {
-  name: "Layout",
-  components: { NavBar, SideBar, AppMain, TagsView, CreateFlow },
+    name: "Layout",
+    components: { NavBar, SideBar, AppMain, TagsView },
 };
 </script>
 
 <style lang="scss" scoped>
 #Layout {
-  padding: 0 0 0 200px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  position: relative;
+    padding: 0 0 0 200px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
 }
 </style>

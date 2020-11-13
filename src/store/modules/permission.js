@@ -1,4 +1,6 @@
-import { constantRoutes } from '@/router'
+import {
+  constantRoutes
+} from '@/router'
 import routerComponentsMap from '@/router/map.js'
 
 function hasPermission(roles, route) {
@@ -41,6 +43,7 @@ function makePermissionRouters(serverRouter) {
 }
 
 function matchPermission(serverRouter, element) {
+  console.log(element.type)
   if (element.type == 0) {
     let res = [];
     serverRouter.map(item => {
@@ -69,7 +72,9 @@ function stringToArray(res) {
 export function filterAsyncRoutes(routes, roles) {
   const res = []
   routes.forEach(route => {
-    const tmp = { ...route }
+    const tmp = {
+      ...route
+    }
 
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
@@ -96,7 +101,12 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, { roles, serverRouter }) {
+  generateRoutes({
+    commit
+  }, {
+    roles,
+    serverRouter
+  }) {
     return new Promise(resolve => {
       let accessedRoutes;
       const routes = makePermissionRouters(serverRouter);
@@ -110,7 +120,9 @@ const actions = {
       resolve(accessedRoutes)
     })
   },
-  setSelectIds({ commit }, selectIds) {
+  setSelectIds({
+    commit
+  }, selectIds) {
     commit('SET_SELECT_IDS', selectIds)
   },
 }

@@ -20,12 +20,11 @@ export default {
       let res = vnode.context.$route.meta.permission;
       let permissionRoles = [];
 
-      console.log(`当前【${vnode.context.$route.meta.title}】页面的名称为"${el.innerText}"的${el.tagName}元素设置${value}权限`);
-      
 
       res.forEach(item => {
         roles.some(role => {
           if (item.roles.includes(role)) {
+            
             permissionRoles.push(item.name);
             
           }
@@ -33,6 +32,7 @@ export default {
       });
       permissionRoles = Array.from(new Set(permissionRoles));
       if (!permissionRoles.includes(value)) {
+        
         console.log(`当前【${vnode.context.$route.meta.title}】页面，当前角色：${roles}，没有【${el.innerText}】${el.tagName}的${value}权限`)
         el.parentNode && el.parentNode.removeChild(el)
       }
