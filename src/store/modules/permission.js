@@ -43,7 +43,6 @@ function makePermissionRouters(serverRouter) {
 }
 
 function matchPermission(serverRouter, element) {
-  console.log(element.type)
   if (element.type == 0) {
     let res = [];
     serverRouter.map(item => {
@@ -101,28 +100,37 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({
-    commit
-  }, {
-    roles,
-    serverRouter
-  }) {
+  /**
+   * 生成路由
+   * @param { Array } roles 角色
+   * @param { Array } serverRouter 菜单
+   */
+  generateRoutes({ commit }, { roles, serverRouter }) {
     return new Promise(resolve => {
+
+      console.log(roles)
+      console.log(serverRouter)
+
       let accessedRoutes;
+
       const routes = makePermissionRouters(serverRouter);
 
       if (roles.includes('admin')) {
+
         accessedRoutes = routes || []
+
       } else {
+
         accessedRoutes = filterAsyncRoutes(routes, roles)
+
       }
+
       commit('SET_ROUTES', accessedRoutes)
+
       resolve(accessedRoutes)
     })
   },
-  setSelectIds({
-    commit
-  }, selectIds) {
+  setSelectIds({ commit }, selectIds) {
     commit('SET_SELECT_IDS', selectIds)
   },
 }

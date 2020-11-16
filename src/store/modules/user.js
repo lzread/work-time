@@ -123,12 +123,14 @@ const actions = {
     })
   },
 
-  // dynamically modify permissions
+  // 修改角色权限 TODO
   changeRoles({ commit, dispatch }, role) {
     return new Promise(async resolve => {
+      
       const token = role + '-token'
 
       commit('SET_TOKEN', token)
+
       Cookies.set('token', token)
 
       const { roles } = await dispatch('getInfo')
