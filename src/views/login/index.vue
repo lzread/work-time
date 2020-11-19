@@ -42,7 +42,7 @@
         <button @click="login">{{ $t("Login.buttonText") }}</button>
 
         <p><a href="#">MIT</a> license</p>
-        <p>Copyright &copy; 2019-2029 lzread </p>
+        <p>Copyright &copy; 2019-2020 vue.lzread.com </p>
 
       </div>
 
