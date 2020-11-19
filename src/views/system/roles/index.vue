@@ -18,14 +18,12 @@
                             <el-tag v-else size="mini">其他</el-tag>
                         </template>
                     </el-table-column>
-                    
-
                     <el-table-column label="操作" width="300">
                         <template slot-scope="scope">
                             <el-button @click="updateRoleHandle(scope.row)" v-if="scope.row.status != -1" type="text" size="mini" v-permission="'EDIT'">编辑角色</el-button>
-                            <el-button @click="permissionHandle(scope.row)" v-if="scope.row.status != -1" size="mini" type="text">权限设置</el-button>
-                            <el-button @click="userHandle(scope.row)" v-if="scope.row.status != -1" size="mini" type="text">管理用户</el-button>
-                            <el-button @click="deleteRoleHandle(scope.$index, scope.row)" v-if="scope.row.status != -1" type="text" size="mini">删除角色</el-button>
+                            <el-button @click="permissionHandle(scope.row)" v-if="scope.row.status != -1" size="mini" type="text" v-permission="'EDIT'">权限设置</el-button>
+                            <el-button @click="userHandle(scope.row)" v-if="scope.row.status != -1" size="mini" type="text" v-permission="'EDIT'">管理用户</el-button>
+                            <el-button @click="deleteRoleHandle(scope.$index, scope.row)" v-if="scope.row.status != -1" type="text" size="mini" v-permission="'DELETE'">删除角色</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

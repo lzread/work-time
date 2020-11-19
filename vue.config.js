@@ -11,13 +11,7 @@ const port = 9527; // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-  /**
-   * You will need to set publicPath if you plan to deploy your site under a sub path,
-   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-   * then publicPath should be set to "/bar/".
-   * In most cases please use '/' !!!
-   * Detail: https://cli.vuejs.org/config/#publicpath
-   */
+
   publicPath: "/",
   outputDir: "dist",
   assetsDir: "static",
@@ -30,21 +24,6 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    // 配置代理 （以接口 https://www.easy-mock.com/mock/5ce2a7854c85c12abefbae0b/api 说明）
-    proxy: {
-      "/api": {
-        // 以 “/api” 开头的 代理到 下边的 target 属性 的值 中
-        target: process.env.VUE_APP_BASE_API,
-        changeOrigin: true, // 是否改变域名
-        ws: true,
-        pathRewrite: {
-          // 路径重写
-          "/api": "5ce2a7854c85c12abefbae0b/api" // 这个意思就是以api开头的，定向到哪里, 如果你的后边还有路径的话， 会自动拼接上
-        }
-      }
-    }
-    // 下边这个， 如果你是本地自己mock 的话用after这个属性，线上环境一定要干掉
-    // after: require("./mock/mock-server.js")
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
