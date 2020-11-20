@@ -35,7 +35,7 @@ export default {
                 if (this.isActive(route)) {
                     let lastView = views.slice(-1)[0];
                     if (lastView) {
-                        this.$router.push(lastView);
+                        this.$router.push({ path: lastView.path });
                     } else {
                         this.$router.push("/");
                     }
