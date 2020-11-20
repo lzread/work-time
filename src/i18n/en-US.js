@@ -1,7 +1,7 @@
 const language = {
 
     Login: {
-        titleText: '',
+        titleText: 'welcome',
         usernamePlaceholderText: 'username',
         passwordPlaceholderText: 'password',
         buttonText: 'login',
