@@ -35,7 +35,15 @@
         </el-form-item>
         <el-form-item label="内容">
           <el-input v-model="items.content" :autosize="{ minRows: 5, maxRows: 10 }" type="textarea" />
+          <el-upload class="avatar-uploader" action="http://127.0.0.1:3111/api/uploadFile" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+            <img v-if="imageURL" :src="imageURL" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
+        <el-form-item label="内容">
+          <el-input v-model="items.content" :autosize="{ minRows: 5, maxRows: 10 }" type="textarea" />
+        </el-form-item>
+
         <el-form-item label="状态">
           <el-radio-group v-model="items.status">
             <el-radio :label="0">正常</el-radio>
@@ -65,6 +73,7 @@ export default {
       dialogVisible: false,
       dialogVisibleType: "",
       total: 0,
+      imageURL: "",
       listQuery: {
         page: 1,
         limit: 10,
@@ -91,6 +100,7 @@ export default {
       this.dialogVisible = true;
       this.dialogVisibleType = "edit";
       this.items = row;
+      this.imageURL = row.image;
     },
     delHandle(index, row) {
       this.$confirm("是否删除当前数据?", "提示", {
@@ -105,6 +115,23 @@ export default {
           message: "删除成功!",
         });
       });
+    },
+
+    handleAvatarSuccess(res, file) {
+      if (res.code == "200") {
+        this.imageURL = URL.createObjectURL(file.raw);
+        this.items.image = res.url;
+      } else {
+        this.$message.error("上传失败，请重试");
+      }
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isLt2M) {
+        this.$message.error("图片大小不能超过 2MB!");
+      }
+      return isLt2M;
     },
 
     async commitHandle() {
@@ -123,4 +150,28 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
