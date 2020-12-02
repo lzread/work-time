@@ -1,0 +1,119 @@
+#Layout {
+    width: 100%;
+    height: 100%;
+
+    #SideBar {
+        width: $sideBarWidth;
+        height: 100%;
+        float: left;
+        background-color: $menuBg;
+
+        .brand {
+            width: 100%;
+            height: $navBarHeight;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        .el-scrollbar {
+            height: 100%;
+
+            .el-scrollbar__wrap {
+                overflow-x: hidden;
+            }
+        }
+
+        .el-menu {
+            height: 100%;
+            border: none;
+
+        }
+    }
+
+    #NavBar {
+        width: calc(100% - #{$sideBarWidth});
+        height: $navBarHeight;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        float: left;
+        border-bottom: 1px solid #ddd;
+
+        .el-breadcrumb {
+            padding: 0 10px;
+        }
+
+        .navbar-info {
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            em {
+                font-style: normal;
+            }
+        }
+    }
+
+    #TagsView {
+        width: calc(100% - #{$sideBarWidth});
+        height: $tagsViewHeight;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        background-color: #fff;
+        padding: 0 2.5px;
+        box-sizing: border-box;
+        float: left;
+        font-size: 14px;
+
+        span {
+            margin: 0 2.5px;
+            padding: 5px;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #999;
+            background-color: #fff;
+
+            i {
+                margin: 0 0 0 5px;
+
+                &:hover {
+                    color: #333;
+                    transition: all 0.5s;
+                }
+            }
+
+            &.active {
+                background-color: $tagsViewActiveBg;
+                color: $tagsViewActiveText;
+            }
+        }
+    }
+
+    #AppMain {
+        width: calc(100% - #{$sideBarWidth});
+        height: calc(100% - #{$navBarHeight + $tagsViewHeight});
+        float: left;
+
+        .el-scrollbar {
+            height: 100%;
+
+            .el-scrollbar__wrap {
+                overflow-x: hidden;
+            }
+        }
+        .container{height: 100%;}
+        .filterBar{margin-bottom: 10px;}
+        .pagination-container {
+            margin-top: 30px;
+        }
+    }
+}

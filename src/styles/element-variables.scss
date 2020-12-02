@@ -3,86 +3,29 @@
 * So I modified the default color and you can modify it to your liking.
 **/
 
-/* font size */
-$--size-base: 12px !default;
-$--font-size-base: 12px !default;
-$--checkbox-font-size: 12px !default;
-$--select-input-font-size: 12px !default;
-$--alert-title-font-size: 12px !default;
-$--notification-title-font-size: 12px !default;
-$--input-medium-font-size: 12px !default;
-$--pagination-font-size: 12px !default;
-$--avatar-text-font-size: 12px !default;
-
-
-/* border radius */
-$--border-radius-base: 0 !default;
-
-
-
 /* theme color */
 $--color-primary: #1890ff;
 $--color-success: #13ce66;
-$--color-warning: #FFBA00;
+$--color-warning: #ffba00;
 $--color-danger: #ff4949;
-$--color-info: #1E1E1E;
+// $--color-info: #1E1E1E;
 
 $--button-font-weight: 400;
 
-
-$--color-text-regular: #1f2d3d;
+// $--color-text-regular: #1f2d3d;
 
 $--border-color-light: #dfe4ed;
 $--border-color-lighter: #e6ebf5;
 
-$--table-border:1px solid#dfe6ec;
-
+$--table-border: 1px solid #dfe6ec;
 
 /* icon font path, required */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
 
 @import "~element-ui/packages/theme-chalk/src/index";
-
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   theme: $--color-primary;
-}
-
-@import "~element-ui/packages/theme-chalk/src/mixins/mixins";
-
-@include b(table) {
-  font-size: 12px;
-}
-
-@include b(breadcrumb) {
-  font-size: 12px;
-}
-
-.el-input__inner,.el-textarea__inner {
-  padding: 0 5px;
-}
-
-
-.el-menu {
-  border: 0;
-
-  .el-menu-item,
-  .el-submenu__title,
-  .el-submenu .el-menu-item {
-    height: 40px;
-    line-height: 40px;
-  }
-}
-
-//隐藏没有顶级菜单的二级菜单前面的"/"
-.el-breadcrumb {
-  padding: 0 5px;
-
-  .el-breadcrumb__inner {
-    &:empty+.el-breadcrumb__separator {
-      display: none;
-    }
-  }
 }

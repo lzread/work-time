@@ -4,7 +4,6 @@
     <aside>
 
       <div class="login-form">
-       <h1>{{ $t("Login.titleText") }}</h1>
         <div class="cell">
           <div class="hd"></div>
           <div class="bd">
@@ -12,7 +11,6 @@
               type="text"
               class="username"
               v-model="loginForm.username"
-              :placeholder="$t('Login.usernamePlaceholderText')"
               maxlength="30"
               autocomplete="false"
             >
@@ -29,7 +27,6 @@
               type="password"
               class="password"
               v-model="loginForm.password"
-              :placeholder="$t('Login.passwordPlaceholderText')"
               maxlength="30"
               autocomplete="false"
             >
@@ -39,7 +36,7 @@
           </div>
         </div>
 
-        <button @click="login">{{ $t("Login.buttonText") }}</button>
+        <button @click="login">登录</button>
 
         <p><a href="#">MIT</a> license</p>
         <p>Copyright &copy; 2019-2025 vue.lzread.com </p>

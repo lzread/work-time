@@ -1,57 +1,39 @@
-import Vue from 'vue';
-import ElementUI from 'element-ui';
+import Vue from 'vue'
 
-import './styles/index.scss';
+import Cookies from 'js-cookie'
 
-import App from './App.vue';
-import router from './router';
-import axios from 'axios';
-import VueI18n from 'vue-i18n';
+import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
-import store from './store';
+import Element from 'element-ui'
+import './styles/element-variables.scss'
+import enLang from 'element-ui/lib/locale/lang/en'// 如果使用中文语言包请默认支持，无需额外引入，请删除该依赖
+
+import '@/styles/index.scss' // global css
+
+import App from './App'
+import store from './store'
+import router from './router'
+
+import './permission' // permission control
+
+import * as filters from './filters' // global filters
 
 
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
+Vue.use(Element, {
+  size: Cookies.get('size') || 'medium', // set element-ui default size
+  locale: enLang // 如果使用中文，无需设置，请删除
+})
 
-import '@/permission'
+// register global utility filters
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
-
-Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
-Vue.use(router);
-Vue.use(VueI18n);
-
-
-
-Vue.component('v-icon', Icon)
-
-
-
-
-
-
-//加载i18n目录下所有语言文件
-const languageFiles = require.context('./i18n', true, /\.js$/)
-const language = languageFiles.keys().reduce((language, path) => {
-  const languageName = path.replace(/^\.\/(.*)\.\w+$/, '$1')
-  const value = languageFiles(path)
-  language[languageName] = value.default
-  return language
-}, {})
-
-const i18n = new VueI18n({
-  locale: 'en-US',
-  messages: language
-});
-
-
-
 new Vue({
+  el: '#app',
   router,
-  i18n,
   store,
-  render: h => h(App),
-}).$mount('#app')
+  render: h => h(App)
+})

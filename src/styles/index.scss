@@ -1,6 +1,9 @@
-@import "./variables.scss";
-@import "./mixin.scss";
-@import "./element-variables.scss";
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './btn.scss';
+@import './layout.scss';
 
 body {
   height: 100%;
@@ -9,19 +12,19 @@ body {
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   overflow: hidden;
-  padding: 0;
-  margin: 0;
+}
+
+label {
+  font-weight: 700;
 }
 
 html {
   height: 100%;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 #app {
   height: 100%;
-  overflow: hidden;
 }
 
 *,
@@ -58,99 +61,4 @@ div:focus {
   }
 }
 
-.scrollbar-wrapper {
-  overflow-x: hidden !important;
-  height: 100%;
-}
 
-.el-scrollbar__bar.is-vertical {
-  right: 0px;
-}
-
-.el-scrollbar {
-  height: 100%;
-}
-
-.el-scrollbar__wrap {
-  height: 100%;
-  overflow-x: auto;
-}
-
-.container {
-  height: 100%;
-}
-
-.searchBar {
-  padding: 5px;
-  border-bottom: 1px solid #e6e6e6;
-  display: flex;
-  align-items: center;
-
-  .el-form-item--mini.el-form-item {
-    margin: 0;
-  }
-
-  .cell {
-    flex-grow: 1;
-
-    &:last-child {
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-}
-
-.filterBar {
-  padding: 5px;
-  border-bottom: 1px solid #e6e6e6;
-  display: flex;
-  align-items: center;
-}
-
-.tableArea {
-  height: calc(100% - 150px);
-  .el-table {
-    td,
-    th {
-      padding: 5px 0;
-    }
-
-    .el-image {
-      overflow: visible;
-    }
-  }
-  .pagination-container {
-    background: #fff;
-    padding: 10px 5px;
-  }
-}
-
-.tree-area {
-  display: flex;
-
-  .tree {
-    width: 350px;
-    flex-grow: 0;
-
-    .filter {
-      .el-input__inner {
-        border: 0;
-        border-bottom: 1px solid #e6e6e6;
-        height: 34px;
-        line-height: 34px;
-      }
-    }
-  }
-
-  .area {
-    flex-grow: 1;
-    border-left: 1px solid #e6e6e6;
-
-    .el-table {
-      td,
-      th {
-        padding: 5px 0;
-      }
-    }
-  }
-}

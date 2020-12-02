@@ -4,26 +4,24 @@
       <el-button size="mini" type="primary" @click="addHandle">新建</el-button>
     </div>
     <div class="tableArea">
-      <el-scrollbar wrap-class="scrollbar-wrapper">
-        <el-table :data="rows" stripe>
-          <el-table-column prop="title" label="标题"> </el-table-column>
-          <el-table-column prop="release_time" label="发布时间"> </el-table-column>
-          <el-table-column label="状态">
-            <template slot-scope="scope">
-              <el-tag v-if="scope.row.status == 0" size="mini">正常</el-tag>
-              <el-tag v-else size="mini">禁用</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="300">
-            <template slot-scope="scope">
-              <el-button @click="editHandle(scope.row)" type="text" size="mini">编辑</el-button>
-              <el-button @click="delHandle(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-scrollbar>
-      <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      <el-table :data="rows" stripe>
+        <el-table-column prop="title" label="标题"> </el-table-column>
+        <el-table-column prop="release_time" label="发布时间"> </el-table-column>
+        <el-table-column label="状态">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.status == 0" size="mini">正常</el-tag>
+            <el-tag v-else size="mini">禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="300">
+          <template slot-scope="scope">
+            <el-button @click="editHandle(scope.row)" type="text" size="mini">编辑</el-button>
+            <el-button @click="delHandle(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
+    <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog width="400px" :visible.sync="dialogVisible" :title="dialogVisibleType == 'add' ? '新建' : '编辑'">
       <el-form :model="items" label-width="80px" label-position="right" size="mini">
