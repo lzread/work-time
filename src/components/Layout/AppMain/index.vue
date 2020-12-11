@@ -1,14 +1,24 @@
 <template>
-  <div id="AppMain">
-    <transition name="slide-fade">
-      <el-scrollbar wrap-class="scrollbar-wrapper">
-        <router-view />
-      </el-scrollbar>
-    </transition>
-  </div>
+    <div id="AppMain">
+        <el-scrollbar wrap-class="scrollbar-wrapper">
+            <transition name="fade-transform" mode="out-in">
+                <keep-alive :include="cachedViews">
+                    <router-view :key="key" />
+                </keep-alive>
+            </transition>
+        </el-scrollbar>
+    </div>
 </template>
 <script>
 export default {
-  name: "AppMain",
+    name: "AppMain",
+    computed: {
+        cachedViews() {
+            return this.$store.state.tagsView.cachedViews;
+        },
+        key() {
+            return this.$route.path;
+        },
+    },
 };
 </script>

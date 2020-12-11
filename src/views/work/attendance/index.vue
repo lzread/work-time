@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'WorkAttendance',
+    name: 'attendance',
     props: {},
     data() {
       return {}

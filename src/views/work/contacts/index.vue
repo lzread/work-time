@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'WorkContacts',
+    name: 'contacts',
     props: {},
     data() {
       return {}

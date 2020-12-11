@@ -106,7 +106,7 @@ import PermissionList from "../components/PermissionList";
 import Pagination from "@/components/Pagination";
 import permission from "@/directive/permission/index.js"; // 权限判断指令
 export default {
-    name: "SystemRoles",
+    name: "roles",
     data() {
         return {
             menus: [],

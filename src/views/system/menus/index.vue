@@ -80,7 +80,7 @@
 import { getAllMenus } from "@/api/menu";
 import permission from "@/directive/permission/index.js"; // 权限判断指令
 export default {
-    name: "SystemMenus",
+    name: "menus",
     data() {
         return {
             menus: [],

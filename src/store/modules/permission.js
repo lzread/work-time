@@ -26,6 +26,7 @@ function makePermissionRouters(serverRouter) {
       item.meta.permission = matchPermission(serverRouter, item);
       item.meta.title = item.title;
       item.hidden = item.hidden == 'false' ? false : true;
+      item.meta.noCache = false;
       delete item.roles;
       delete item.title;
 

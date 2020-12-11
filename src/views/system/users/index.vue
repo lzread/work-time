@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'SystemUsers',
+  name: 'users',
   props: {},
   data() {
     return {}

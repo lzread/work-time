@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'WorkReport',
+    name: 'report',
     props: {},
     data() {
       return {}

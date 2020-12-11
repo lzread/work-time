@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'SystemDepartment',
+    name: 'department',
     props: {},
     data() {
       return {}

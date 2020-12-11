@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'WorkSchedule',
+    name: 'schedule',
     props: {},
     data() {
       return {}

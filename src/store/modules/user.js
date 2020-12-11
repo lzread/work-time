@@ -74,8 +74,6 @@ const actions = {
           reject('您还未必分配角色，请联系管理员!')
         }
 
-        console.log(data);
-
         commit('SET_ROLES', roles)
         commit('SET_NAME', realname)
         commit('SET_AVATAR', avatar)
@@ -91,7 +89,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getMenus().then(response => {
         const { data } = response
-        console.log(data);
+        console.log(JSON.stringify(data));
         commit('SET_SERVER_ROUTER', data);
         resolve(data)
       }).catch(error => {

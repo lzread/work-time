@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'SystemLogs',
+  name: 'logs',
   props: {},
   data() {
     return {}

@@ -10,8 +10,7 @@
                 </el-input>
             </div>
             <div class="extend-block">
-                <el-button type="primary" icon="el-icon-download" size="mini">导出</el-button>
-                <el-button type="primary" icon="el-icon-upload2" size="mini">导入</el-button>
+                <el-button type="primary" icon="el-icon-download" size="mini" @click="exportHandle">导出</el-button>
             </div>
         </div>
         <div class="tableArea">
@@ -75,7 +74,7 @@
 import { list, add, edit, del } from "@/api/notice";
 import Pagination from "@/components/Pagination";
 export default {
-    name: "WorkNotice",
+    name: "notice",
     props: {},
     data() {
         return {
@@ -158,6 +157,33 @@ export default {
                 this.$message.error("图片大小不能超过 2MB!");
             }
             return isLt2M;
+        },
+
+        exportHandle() {
+            import("@/vendor/Export2Excel").then((excel) => {
+                const tHeader = ["ID", "TITLE"];
+                const filterVal = ["id", "title"];
+                const list = this.rows;
+                const data = this.formatJson(filterVal, list);
+                excel.export_json_to_excel({
+                    header: tHeader, //表头 必填
+                    data, //具体数据 必填
+                    filename: "excel-list", //非必填
+                    autoWidth: true, //非必填
+                    bookType: "xlsx", //非必填
+                });
+            });
+        },
+        formatJson(filterVal, jsonData) {
+            return jsonData.map((v) =>
+                filterVal.map((j) => {
+                    if (j === "timestamp") {
+                        return parseTime(v[j]);
+                    } else {
+                        return v[j];
+                    }
+                })
+            );
         },
 
         async commitHandle() {
