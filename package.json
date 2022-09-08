@@ -15,7 +15,7 @@
     "file-saver": "^2.0.5",
     "js-cookie": "^2.2.1",
     "js-md5": "^0.7.3",
-    "jszip": "^3.2.2",
+    "jszip": "^3.7.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
